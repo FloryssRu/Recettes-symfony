@@ -71,6 +71,7 @@ class AppFixtures extends Fixture
 
         $recipe = new Recipe();
         $recipe
+            ->setName('Mousse au chocolat')
             ->setCreatedAt(new DateTimeImmutable())
             ->setOwner($user)
             ->setPreparationTime(30)
