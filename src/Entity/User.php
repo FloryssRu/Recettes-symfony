@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -32,6 +34,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $cookingLevel = null;
+
+    /**
+     * @var Collection<int, Recipe>
+     */
+    #[ORM\OneToMany(targetEntity: Recipe::class, mappedBy: 'owner')]
+    private Collection $recipes;
+
+    /**
+     * @var Collection<int, Recipe>
+     */
+    #[ORM\ManyToMany(targetEntity: Recipe::class, inversedBy: 'likedUsers')]
+    private Collection $likedRecipes;
+
+    public function __construct()
+    {
+        $this->recipes = new ArrayCollection();
+        $this->likedRecipes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -106,5 +129,71 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getCookingLevel(): ?int
+    {
+        return $this->cookingLevel;
+    }
+
+    public function setCookingLevel(?int $cookingLevel): static
+    {
+        $this->cookingLevel = $cookingLevel;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Recipe>
+     */
+    public function getRecipes(): Collection
+    {
+        return $this->recipes;
+    }
+
+    public function addRecipe(Recipe $recipe): static
+    {
+        if (!$this->recipes->contains($recipe)) {
+            $this->recipes->add($recipe);
+            $recipe->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecipe(Recipe $recipe): static
+    {
+        if ($this->recipes->removeElement($recipe)) {
+            // set the owning side to null (unless already changed)
+            if ($recipe->getOwner() === $this) {
+                $recipe->setOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Recipe>
+     */
+    public function getLikedRecipes(): Collection
+    {
+        return $this->likedRecipes;
+    }
+
+    public function addLikedRecipe(Recipe $likedRecipe): static
+    {
+        if (!$this->likedRecipes->contains($likedRecipe)) {
+            $this->likedRecipes->add($likedRecipe);
+        }
+
+        return $this;
+    }
+
+    public function removeLikedRecipe(Recipe $likedRecipe): static
+    {
+        $this->likedRecipes->removeElement($likedRecipe);
+
+        return $this;
     }
 }
