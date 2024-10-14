@@ -11,7 +11,7 @@ class RandomController extends AbstractController
     /**
      * Page witch allows user to get a random meal with parameters
      */
-    #[Route('/repas-random', name: 'app_random')]
+    #[Route('/repas-random', name: 'app_random', methods: ['GET', 'POST'])]
     public function index(): Response
     {
         return $this->render('random/index.html.twig', []);
