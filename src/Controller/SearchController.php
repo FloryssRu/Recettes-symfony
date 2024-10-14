@@ -20,7 +20,7 @@ class SearchController extends AbstractController
     /**
      * Page witch shows details of a recipe
      */
-    #[Route('/liker/{id<[0-9]+>}/{like<[0-1]>', name: 'app_recipe', methods: ['GET'])]
+    #[Route('/recette/{id<[0-9]+>}', name: 'app_recipe', methods: ['GET'])]
     public function recipeDetails(): Response
     {
         return $this->render('search/recipe.html.twig', []);
