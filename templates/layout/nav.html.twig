@@ -1,5 +1,6 @@
 <nav>
     <ul>
+        <li><a href="{{ path('app_home') }}">Accueil</a></h1>
         {% if app.user %}
             <li><a href="{{ path('app_logout') }}">Déconnexion</a></li>
         {% else %}

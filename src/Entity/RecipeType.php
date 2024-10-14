@@ -18,6 +18,11 @@ class RecipeType
     #[ORM\Column(length: 100)]
     private ?string $name = null;
 
+    public function __toString(): string
+    {
+        return $this->getName();
+    }
+
     /**
      * @var Collection<int, Recipe>
      */

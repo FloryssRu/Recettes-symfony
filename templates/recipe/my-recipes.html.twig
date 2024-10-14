@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes recettes{% endblock %}
+
+{% block body %}
+    <section>
+        <h1>Mes recettes</h1>
+
+        {% for recipe in recipes %}
+            {% include "/bloc/recipe.html.twig" with {'recipe': recipe} %}
+        {% else %}
+            <p>Vous n'avez encore enregistré aucune recette.</p>
+        {% endfor %}
+    </section>
+{% endblock %}
