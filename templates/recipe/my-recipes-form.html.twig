@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% if recipe %}
+        Edition de : {{ recipe.name }}
+    {% else %}
+        Nouvelle recette
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <section>
+        <h1>
+            {% if recipe %}
+                {{ recipe.name }}
+            {% else %}
+                Nouvelle recette
+            {% endif %}
+        </h1>
+
+        {{ form_start(form) }}
+        {{ form_end(form) }}
+    </section>
+{% endblock %}
