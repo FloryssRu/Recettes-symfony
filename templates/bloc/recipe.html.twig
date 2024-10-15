@@ -3,6 +3,10 @@
     <p>{{ recipe.likedUsers|length }} ❤️</p>
     <p>Par {{ recipe.owner.pseudo }}, le {{ recipe.createdAt|date('Y/m/d') }}</p>
 
+    {% if listMode %}
+        <a href="{{ path('app_myrecipes_form', {recipeId: recipe.id })}}"><button>Editer</button></a>
+    {% endif %}
+
     <p>Types : {{ recipe.types|join(', ') }}</p>
     <p>Temps de préparation : {{ recipe.preparationTime }} min</p>
     {% if recipe.isVegetarian %}

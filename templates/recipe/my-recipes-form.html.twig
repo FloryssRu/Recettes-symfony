@@ -9,6 +9,8 @@
 {% endblock %}
 
 {% block body %}
+    <a href="{{ path('app_myrecipes', {recipeId: recipe.id })}}"><button>< Retour à la liste</button></a>
+
     <section>
         <h1>
             {% if recipe and recipe.name %}
@@ -97,6 +99,7 @@
         <button type="submit">
             Enregistrer
         </button>
+
 
         {{ form_end(form) }}
     </section>

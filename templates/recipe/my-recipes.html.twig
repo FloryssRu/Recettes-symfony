@@ -7,7 +7,7 @@
         <h1>Mes recettes</h1>
 
         {% for recipe in recipes %}
-            {% include "/bloc/recipe.html.twig" with {'recipe': recipe, 'truncated': true} %}
+            {% include "/bloc/recipe.html.twig" with {'recipe': recipe, 'listMode': true} %}
         {% else %}
             <p>Vous n'avez encore enregistré aucune recette.</p>
         {% endfor %}
