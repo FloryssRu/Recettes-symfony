@@ -9,7 +9,11 @@
 {% endblock %}
 
 {% block body %}
-    <a href="{{ path('app_myrecipes', {recipeId: recipe.id })}}"><button>< Retour à la liste</button></a>
+    <a href="{{ path('app_myrecipes') }}">
+        <button>
+            < Retour à la liste
+        </button>
+    </a>
 
     <section>
         <h1>

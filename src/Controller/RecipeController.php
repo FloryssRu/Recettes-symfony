@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Recipe;
 use App\Form\RecipeFormType;
 use App\Repository\RecipeRepository;
-use DateTimeImmutable;
+use App\Services\RecipeService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +18,7 @@ class RecipeController extends AbstractController
     public function __construct(
         private readonly EntityManagerInterface $manager,
         private readonly RecipeRepository $recipeRepository,
+        private readonly RecipeService $recipeService
     ) {}
 
     /**
@@ -44,23 +45,19 @@ class RecipeController extends AbstractController
      * Don't use EntityValueResolver before we use this page to create non existant recipes
      * => id could be at value 0
      */
-    #[Route('/{recipeId<[0-9]+>}', name: 'app_myrecipes_form', methods: ['GET', 'POST'])]
-    public function myRecipesForm(int $recipeId, Request $request): Response
+    #[Route('/{id<[0-9]+>}', name: 'app_myrecipes_form', methods: ['GET', 'POST'])]
+    public function myRecipesForm(int $id, Request $request): Response
     {
-        if ($recipeId !== 0) $recipe = $this->recipeRepository->find($recipeId);
+        if ($id !== 0) $recipe = $this->recipeRepository->find($id);
         else $recipe = new Recipe();
 
         $form = $this->createForm(RecipeFormType::class, $recipe, []);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $recipe
-                ->setCreatedAt(new DateTimeImmutable())
-                ->setOwner($this->getUser())
-            ;
-            $this->manager->persist($recipe);
-            $this->manager->flush();
+            $this->recipeService->saveRecipe($recipe);
             $this->addFlash('success', 'La recette a été enregistrée.');
+            return $this->redirectToRoute('app_myrecipes');
         }
 
         return $this->render('recipe/my-recipes-form.html.twig', [

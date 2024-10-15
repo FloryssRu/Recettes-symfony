@@ -4,7 +4,14 @@
     <p>Par {{ recipe.owner.pseudo }}, le {{ recipe.createdAt|date('Y/m/d') }}</p>
 
     {% if listMode %}
-        <a href="{{ path('app_myrecipes_form', {recipeId: recipe.id })}}"><button>Editer</button></a>
+        <a href="{{ path('app_myrecipes_form', {id: recipe.id })}}">
+            <button>Editer</button>
+        </a>
+        <form method="post" action="{{ path('app_myrecipes_delete', {id: recipe.id })}}">
+            <button type="submit" onclick="confirm('Etes-vous sûr de supprimer cette recette ?')">
+                Supprimer
+            </button>
+        </form>
     {% endif %}
 
     <p>Types : {{ recipe.types|join(', ') }}</p>
