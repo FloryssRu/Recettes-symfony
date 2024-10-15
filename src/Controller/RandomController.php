@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class RandomController extends AbstractController
 {
     /**
-     * Page witch allows user to get a random meal with parameters
+     * Page which allows user to get a random meal with parameters
      */
     #[Route('/repas-random', name: 'app_random', methods: ['GET', 'POST'])]
     public function index(): Response

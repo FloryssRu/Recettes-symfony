@@ -62,7 +62,7 @@ class RecipeController extends AbstractController
     }
 
     /**
-     * Page witch delete a recipe
+     * Page which delete a recipe
      * TODO : if possible, replace method POST by method DELETE
      */
     #[Route('/suppression/{id<[0-9]+>}', name: 'app_myrecipes_delete', methods: ['POST'])]
