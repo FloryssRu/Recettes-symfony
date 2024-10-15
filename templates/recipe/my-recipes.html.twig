@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes recettes{% endblock %}
+
+{% block body %}
+    <section>
+        <h1>Mes recettes</h1>
+
+        <a href="{{ path('app_myrecipes_form', {id: 0}) }}"><button>Nouvelle recette</button></a>
+
+        {% for recipe in recipes %}
+            {% include "/bloc/recipe.html.twig" with {'recipe': recipe, 'listMode': true} %}
+        {% else %}
+            <p>Vous n'avez encore enregistré aucune recette.</p>
+        {% endfor %}
+    </section>
+{% endblock %}

@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class SearchController extends AbstractController
 {
     /**
-     * Page witch allows to make a search in recipes with parameters
+     * Page which allows to make a search in recipes with parameters
      */
     #[Route('/recherche', name: 'app_search', methods: ['GET', 'POST'])]
     public function search(): Response
@@ -18,7 +18,7 @@ class SearchController extends AbstractController
     }
 
     /**
-     * Page witch shows details of a recipe
+     * Page which shows details of a recipe
      */
     #[Route('/recette/{id<[0-9]+>}', name: 'app_recipe', methods: ['GET'])]
     public function recipeDetails(): Response
@@ -27,7 +27,7 @@ class SearchController extends AbstractController
     }
 
     /**
-     * Page witch allows user to like/unlike a recipe
+     * Page which allows user to like/unlike a recipe
      */
     #[Route('/liker/{id<[0-9]+>}/{like<[0-1]>', name: 'app_like', methods: ['POST'])]
     public function likeRecipe(int $id): Response

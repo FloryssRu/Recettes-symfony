@@ -15,6 +15,9 @@ class Recipe
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(length: 100)]
+    private ?string $name = null;
+
     #[ORM\ManyToOne(inversedBy: 'recipes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $owner = null;
@@ -85,6 +88,18 @@ class Recipe
         return $this->id;
     }
 
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): static
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
     public function getOwner(): ?User
     {
         return $this->owner;
@@ -121,24 +136,24 @@ class Recipe
         return $this;
     }
 
-    public function isVegetarian(): ?bool
+    public function getIsVegetarian(): ?bool
     {
         return $this->isVegetarian;
     }
 
-    public function setVegetarian(bool $isVegetarian): static
+    public function setIsVegetarian(bool $isVegetarian): static
     {
         $this->isVegetarian = $isVegetarian;
 
         return $this;
     }
 
-    public function isVegan(): ?bool
+    public function getIsVegan(): ?bool
     {
         return $this->isVegan;
     }
 
-    public function setVegan(bool $isVegan): static
+    public function setIsVegan(bool $isVegan): static
     {
         $this->isVegan = $isVegan;
 

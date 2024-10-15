@@ -1,0 +1,48 @@
+<article>
+    <h2>{{ recipe.name }}</h2>
+    <p>{{ recipe.likedUsers|length }} ❤️</p>
+    <p>Par {{ recipe.owner.pseudo }}, le {{ recipe.createdAt|date('Y/m/d') }}</p>
+
+    {% if listMode %}
+        <a href="{{ path('app_recipe', {id: recipe.id })}}">
+            <button>Voir</button>
+        </a>
+        <a href="{{ path('app_myrecipes_form', {id: recipe.id })}}">
+            <button>Editer</button>
+        </a>
+        <form method="post" action="{{ path('app_myrecipes_delete', {id: recipe.id })}}">
+            <button type="submit" onclick="confirm('Etes-vous sûr de supprimer cette recette ?')">
+                Supprimer
+            </button>
+        </form>
+    {% endif %}
+
+    {% if not listMode %}
+        <p>Types : {{ recipe.types|join(', ') }}</p>
+        <p>Temps de préparation : {{ recipe.preparationTime }} min</p>
+        {% if recipe.isVegetarian %}
+            <p>Cette recette est végétarienne</p>
+        {% endif %}
+        {% if recipe.isVegan %}
+            <p>Cette recette est végan</p>
+        {% endif %}
+        {% if recipe.seasons|length > 0 %}
+            <p>Cette recette est à faire en {{ recipe.seasons|join(', ') }}</p>
+        {% endif %}
+
+        <h3>Ingrédients</h3>
+        <ul>
+            {% for ingredient in recipe.ingredients %}
+                <li>{{ ingredient.name }} : {{ ingredient.number }}{{ ingredient.measureUnit }}</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Préparation</h3>
+        <ul>
+            {# order steps by step.number #}
+            {% for step in recipe.steps %}
+                <li>{{ step.description }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</article>

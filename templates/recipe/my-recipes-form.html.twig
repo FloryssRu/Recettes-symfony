@@ -1,0 +1,114 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% if recipe and recipe.name %}
+        Edition de : {{ recipe.name }}
+    {% else %}
+        Nouvelle recette
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <a href="{{ path('app_myrecipes') }}">
+        <button>
+            < Retour à la liste
+        </button>
+    </a>
+
+    <section>
+        <h1>
+            {% if recipe and recipe.name %}
+                {{ recipe.name }}
+            {% else %}
+                Nouvelle recette
+            {% endif %}
+        </h1>
+
+        {{ form_start(form) }}
+        <div>
+            {{ form_errors(form.name) }}
+            {{ form_label(form.name) }}
+            {{ form_widget(form.name) }}
+            {{ form_help(form.name) }}
+        </div>
+        <div>
+            {{ form_errors(form.preparationTime) }}
+            {{ form_label(form.preparationTime) }}
+            {{ form_widget(form.preparationTime) }}
+            {{ form_help(form.preparationTime) }}
+        </div>
+        <div>
+            {{ form_errors(form.isVegetarian) }}
+            {{ form_widget(form.isVegetarian) }}
+            {{ form_label(form.isVegetarian) }}
+            {{ form_help(form.isVegetarian) }}
+        </div>
+        <div>
+            {{ form_errors(form.isVegan) }}
+            {{ form_widget(form.isVegan) }}
+            {{ form_label(form.isVegan) }}
+            {{ form_help(form.isVegan) }}
+        </div>
+        <div>
+            {{ form_errors(form.seasons) }}
+            {{ form_label(form.seasons) }}
+            {{ form_widget(form.seasons) }}
+            {{ form_help(form.seasons) }}
+        </div>
+        <div>
+            {{ form_errors(form.types) }}
+            {{ form_label(form.types) }}
+            {{ form_widget(form.types) }}
+            {{ form_help(form.types) }}
+        </div>
+
+        {# Collection input for ingredients : #}
+        <div class="collection-form-bloc">
+            <h3>Ingrédients</h3>
+            {{ form_errors(form.ingredients) }}
+            <button type="button" class="button btn-new" data-collection="#ingredients" data-number="__name__">
+                Ajouter un Ingrédient
+            </button>
+            <div id="ingredients"
+                data-prototype="{{ include("recipe/_ingredient.html.twig", {form : form.ingredients.vars.prototype})|e("html_attr") }}"
+                data-index="{{ form.ingredients|length > 0 ? form.ingredients|last.vars.name + 1 : 0 }}"
+            >
+                {% for ingredient in form.ingredients %}
+                    <div class="form-item">
+                        {{ include("recipe/_ingredient.html.twig", {form : ingredient}) }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        {# Collection input for steps : #}
+        <div class="collection-form-bloc">
+            <h3>Etapes</h3>
+            {{ form_errors(form.steps) }}
+            <button type="button" class="button btn-new" data-collection="#steps" data-number="__name__">
+                Ajouter une Etape
+            </button>
+            <div id="steps"
+                data-prototype="{{ include("recipe/_step.html.twig", {form : form.steps.vars.prototype})|e("html_attr") }}"
+                data-index="{{ form.steps|length > 0 ? form.steps|last.vars.name + 1 : 0 }}"
+            >
+                {% for step in form.steps %}
+                    <div class="form-item">
+                        {{ include("recipe/_step.html.twig", {form : step}) }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <button type="submit">
+            Enregistrer
+        </button>
+
+
+        {{ form_end(form) }}
+    </section>
+{% endblock %}
+
+{% block end_javascripts %}
+    <script src="/js/forms/collectionType.js"></script>
+{% endblock %}
