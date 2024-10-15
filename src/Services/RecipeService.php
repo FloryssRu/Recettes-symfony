@@ -105,4 +105,9 @@ class RecipeService extends AbstractController
 
         return $recipesToReturn;
     }
+
+    public function getResultsOfSearch(Recipe $recipe): array
+    {
+        return []; // TODO finish this function
+    }
 }

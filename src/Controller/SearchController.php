@@ -2,19 +2,40 @@
 
 namespace App\Controller;
 
+use App\Entity\Recipe;
+use App\Form\RandomFormType;
+use App\Services\RecipeService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 class SearchController extends AbstractController
 {
+    public function __construct(
+        private readonly RecipeService $recipeService
+    ) {}
+
     /**
      * Page which allows to make a search in recipes with parameters
      */
     #[Route('/recherche', name: 'app_search', methods: ['GET', 'POST'])]
-    public function search(): Response
+    public function search(Request $request): Response
     {
-        return $this->render('search/index.html.twig', []);
+        $params = new Recipe();
+        $recipes = [];
+
+        $form = $this->createForm(RandomFormType::class, $params, []);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $recipes = $this->recipeService->getResultsOfSearch($params);
+        }
+
+        return $this->render('search/index.html.twig', [
+            'form' => $form,
+            'recipes' => $recipes
+        ]);
     }
 
     /**
