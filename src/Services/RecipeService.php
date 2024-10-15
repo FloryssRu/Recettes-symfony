@@ -76,17 +76,31 @@ class RecipeService extends AbstractController
                     $recipe->getIsVegan()
                 );
             }
-        // If we want a recipe in one of selected types
+        // If we want a recipe in one of selected types randomly
         } else {
-            $numberOfTypes = count($recipe->getTypes()->toArray());
-            $indexOfType = rand(0, $numberOfTypes-1);
-            $type = $recipe->getTypes()->toArray()[$indexOfType];
+            $recipesToReturn[0] = null;
+            $types = $recipe->getTypes()->toArray();
+            $numberOfTypes = count($types);
 
-            $recipesToReturn[] = $this->recipeRepository->findOneByType(
-                $type,
-                $recipe->getIsVegetarian(),
-                $recipe->getIsVegan()
-            );
+            $i = $numberOfTypes-1;
+            while ($i >= 0) {
+                $indexOfType = rand(0, count($types)-1);
+                $type = $types[$indexOfType];
+    
+                $recipeFound = $this->recipeRepository->findOneByType(
+                    $type,
+                    $recipe->getIsVegetarian(),
+                    $recipe->getIsVegan()
+                );
+
+                if ($recipeFound !== null) {
+                    $recipesToReturn[0] = $recipeFound; // replace null by result
+                    $i = -1; // quit the while loop
+                } else {
+                    array_splice($types, $indexOfType, 1); // remove type
+                    $i = $i-1; // continue the while loop
+                }
+            }
         }
 
         return $recipesToReturn;
