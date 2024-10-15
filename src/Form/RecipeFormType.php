@@ -8,6 +8,7 @@ use App\Entity\Season;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -56,6 +57,32 @@ class RecipeFormType extends AbstractType
                 'choice_label' => 'name',
                 'multiple' => true,
                 'expanded' => true,
+            ])
+            ->add('ingredients', CollectionType::class, [
+                'entry_type' => IngredientFormType::class,
+                'label' => false,
+                'required' => true,
+                'entry_options' => [
+                    'label' => false,
+                    'required' => false,
+                ],
+                'by_reference' => false,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'error_bubbling' => false,
+            ])
+            ->add('steps', CollectionType::class, [
+                'entry_type' => StepFormType::class,
+                'label' => false,
+                'required' => true,
+                'entry_options' => [
+                    'label' => false,
+                    'required' => false,
+                ],
+                'by_reference' => false,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'error_bubbling' => false,
             ])
         ;
     }
