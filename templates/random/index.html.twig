@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recettes random{% endblock %}
+
+{% block body %}
+    <section>
+        <h1>Trouver des recettes</h1>
+
+        {{ form_start(form) }}
+        <div>
+            {{ form_errors(form.types) }}
+            {{ form_label(form.types) }}
+            {{ form_widget(form.types) }}
+            {{ form_help(form.types) }}
+        </div>
+        <div>
+            {{ form_errors(form.allOfThisTypes) }}
+            {{ form_widget(form.allOfThisTypes) }}
+            {{ form_label(form.allOfThisTypes) }}
+            {{ form_help(form.allOfThisTypes) }}
+        </div>
+        <div>
+            {{ form_errors(form.isVegetarian) }}
+            {{ form_widget(form.isVegetarian) }}
+            {{ form_label(form.isVegetarian) }}
+            {{ form_help(form.isVegetarian) }}
+        </div>
+        <div>
+            {{ form_errors(form.isVegan) }}
+            {{ form_widget(form.isVegan) }}
+            {{ form_label(form.isVegan) }}
+            {{ form_help(form.isVegan) }}
+        </div>
+        <button type="submit">
+            Chercher !
+        </button>
+
+        {% for recipe in recipes %}
+            {% if not recipe and recipes|length > 1 %}
+                <p>Aucune recette du type {{ types[loop.index - 1].name }} trouvée.</p>
+            {% elseif not recipe %}
+                <p>Aucune recette trouvée.</p>
+            {% else %}
+                {% include "/bloc/recipe.html.twig" with {'recipe': recipe, 'listMode': true, 'editable': false} %}
+            {% endif %}
+        {% else %}
+            <p>Remplissez le formulaire ci-dessus pour obtenir des recettes aléatoires.
+        {% endfor %}
+
+        {{ form_end(form) }}
+    </section>
+{% endblock %}
