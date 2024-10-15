@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Recipe;
 use App\Form\RecipeFormType;
+use App\Repository\RecipeRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -14,7 +16,8 @@ use Symfony\Component\Routing\Attribute\Route;
 class RecipeController extends AbstractController
 {
     public function __construct(
-        private readonly EntityManagerInterface $manager
+        private readonly EntityManagerInterface $manager,
+        private readonly RecipeRepository $recipeRepository,
     ) {}
 
     /**
@@ -38,12 +41,17 @@ class RecipeController extends AbstractController
 
     /**
      * Page which allow user to modify / create a recipe
+     * Don't use EntityValueResolver before we use this page to create non existant recipes
+     * => id could be at value 0
      */
-    #[Route('/{id<[0-9]+>}', name: 'app_myrecipes_form', methods: ['GET', 'POST'])]
-    public function myRecipesForm(Recipe $recipe): Response
+    #[Route('/{recipeId<[0-9]+>}', name: 'app_myrecipes_form', methods: ['GET', 'POST'])]
+    public function myRecipesForm(int $recipeId, Request $request): Response
     {
-        if (!$recipe) $recipe = null;
+        if ($recipeId !== 0) $recipe = $this->recipeRepository->find($recipeId);
+        else $recipe = new Recipe();
+
         $form = $this->createForm(RecipeFormType::class, $recipe, []);
+        $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $recipe
@@ -52,7 +60,7 @@ class RecipeController extends AbstractController
             ;
             $this->manager->persist($recipe);
             $this->manager->flush();
-            $this->addFlash('success', 'La recette a été enresgitrée.');
+            $this->addFlash('success', 'La recette a été enregistrée.');
         }
 
         return $this->render('recipe/my-recipes-form.html.twig', [

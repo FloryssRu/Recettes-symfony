@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {% if recipe %}
+    {% if recipe and recipe.name %}
         Edition de : {{ recipe.name }}
     {% else %}
         Nouvelle recette
@@ -11,7 +11,7 @@
 {% block body %}
     <section>
         <h1>
-            {% if recipe %}
+            {% if recipe and recipe.name %}
                 {{ recipe.name }}
             {% else %}
                 Nouvelle recette
@@ -80,7 +80,7 @@
             <h3>Etapes</h3>
             {{ form_errors(form.steps) }}
             <button type="button" class="button btn-new" data-collection="#steps" data-number="__name__">
-                Ajouter un Ingrédient
+                Ajouter une Etape
             </button>
             <div id="steps"
                 data-prototype="{{ include("recipe/_step.html.twig", {form : form.steps.vars.prototype})|e("html_attr") }}"
@@ -94,7 +94,11 @@
             </div>
         </div>
 
-        {{ form_end(form, {render_rest: false}) }}
+        <button type="submit">
+            Enregistrer
+        </button>
+
+        {{ form_end(form) }}
     </section>
 {% endblock %}
 

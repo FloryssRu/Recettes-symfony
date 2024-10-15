@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\Length;
 
 class RecipeFormType extends AbstractType
@@ -34,7 +35,10 @@ class RecipeFormType extends AbstractType
             ])
             ->add('preparationTime', IntegerType::class, [
                 'label' => 'Temps de préparation en minutes',
-                'required' => false
+                'required' => false,
+                'constraints' => [
+                    new GreaterThan(0)
+                ]
             ])
             ->add('isVegetarian', CheckboxType::class, [
                 'label' => 'Recette végétarienne',

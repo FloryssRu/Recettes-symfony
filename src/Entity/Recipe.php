@@ -136,24 +136,24 @@ class Recipe
         return $this;
     }
 
-    public function isVegetarian(): ?bool
+    public function getIsVegetarian(): ?bool
     {
         return $this->isVegetarian;
     }
 
-    public function setVegetarian(bool $isVegetarian): static
+    public function setIsVegetarian(bool $isVegetarian): static
     {
         $this->isVegetarian = $isVegetarian;
 
         return $this;
     }
 
-    public function isVegan(): ?bool
+    public function getIsVegan(): ?bool
     {
         return $this->isVegan;
     }
 
-    public function setVegan(bool $isVegan): static
+    public function setIsVegan(bool $isVegan): static
     {
         $this->isVegan = $isVegan;
 
