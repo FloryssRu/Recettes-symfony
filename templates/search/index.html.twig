@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recherche de recettes{% endblock %}
+
+{% block body %}
+    <section>
+        <h1>Trouver des recettes</h1>
+
+        {{ form_start(form) }}
+            <div>
+                {{ form_errors(form.types) }}
+                {{ form_label(form.types) }}
+                {{ form_widget(form.types) }}
+                {{ form_help(form.types) }}
+            </div>
+            <div>
+                {{ form_errors(form.isVegetarian) }}
+                {{ form_widget(form.isVegetarian) }}
+                {{ form_label(form.isVegetarian) }}
+                {{ form_help(form.isVegetarian) }}
+            </div>
+            <div>
+                {{ form_errors(form.isVegan) }}
+                {{ form_widget(form.isVegan) }}
+                {{ form_label(form.isVegan) }}
+                {{ form_help(form.isVegan) }}
+            </div>
+            <button type="submit">
+                Chercher !
+            </button>
+        {{ form_end(form) }}
+
+        {% if noRecipeFounded %}
+            <p>Aucune recette trouvée.</p>
+        {% else %}
+            {% for recipe in recipes %}
+                {% include "/bloc/recipe.html.twig" with {'recipe': recipe, 'listMode': true, 'editable': false} %}
+            {% else %}
+                <p>Remplissez le formulaire ci-dessus pour obtenir des résultats.</p>
+            {% endfor %}
+
+            {# Pagination buttons #}
+            {% if recipes|length > 0 %}
+                <div>
+                    {% if page > 0 %}
+                        <button onclick="goToPrevPage({{ page }})">
+                            < Résultats précédents
+                        </button>
+                    {% endif %}
+                    <span>Page {{ page + 1 }}</span>
+                    {% if page < totalOfPages %}
+                        <button onclick="goToNextPage({{ page }})">
+                            Résultats suivants >
+                        </button>
+                    {% endif %}
+                </div>
+            {% endif %}
+            {# End of Pagination buttons #}
+        {% endif %}
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        const changePage = function(page) {
+            $('form').attr('action', '?page=' + page);
+            $('button[type=submit]').click();
+        }
+
+        const goToNextPage = function(actualPage) {
+            changePage(actualPage + 1);
+        }
+
+        const goToPrevPage = function(actualPage) {
+            changePage(actualPage - 1);
+        }
+    </script>
+{% endblock %}

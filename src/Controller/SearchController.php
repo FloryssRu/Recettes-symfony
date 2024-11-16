@@ -2,28 +2,71 @@
 
 namespace App\Controller;
 
+use App\Entity\Recipe;
+use App\Form\RandomFormType;
+use App\Repository\RecipeRepository;
+use App\Services\RecipeService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 class SearchController extends AbstractController
 {
+    public function __construct(
+        private readonly RecipeService $recipeService,
+        private readonly RecipeRepository $recipeRepository
+    ) {}
+
     /**
      * Page which allows to make a search in recipes with parameters
      */
     #[Route('/recherche', name: 'app_search', methods: ['GET', 'POST'])]
-    public function search(): Response
+    public function search(Request $request): Response
     {
-        return $this->render('search/index.html.twig', []);
+        $params = new Recipe();
+        $recipes = [];
+        $noRecipeFounded = false;
+        $page = $this->recipeService->getPageToTrust($request->query->get('page'));
+        $totalOfPages = 0;
+
+        $form = $this->createForm(RandomFormType::class, $params, [
+            'randomSearch' => false
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $recipes = $this->recipeService->getResultsOfSearch(
+                $params,
+                $page
+            );
+            if (count($recipes) === 0) $noRecipeFounded = true;
+            else $totalOfPages = $this->recipeService->getTotalOfPages($params);
+        }
+
+        return $this->render('search/index.html.twig', [
+            'form' => $form,
+            'recipes' => $recipes,
+            'noRecipeFounded' => $noRecipeFounded,
+            'page' => $page,
+            'totalOfPages' => $totalOfPages - 1
+        ]);
     }
 
     /**
      * Page which shows details of a recipe
      */
     #[Route('/recette/{id<[0-9]+>}', name: 'app_recipe', methods: ['GET'])]
-    public function recipeDetails(): Response
+    public function recipeDetails(int $id): Response
     {
-        return $this->render('search/recipe.html.twig', []);
+        $recipe = $this->recipeRepository->findOneById($id);
+        if (!$recipe) {
+            $this->addFlash('error', "Cette recette n'existe pas.");
+            return $this->redirectToRoute('app_search');
+        }
+        return $this->render('search/recipe.html.twig', [
+            'recipe' => $recipe
+        ]);
     }
 
     /**

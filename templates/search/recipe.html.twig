@@ -1,0 +1,7 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ recipe.name }}{% endblock %}
+
+{% block body %}
+    {% include "/bloc/recipe.html.twig" with {'recipe': recipe, 'listMode': false, 'editable': false} %}
+{% endblock %}

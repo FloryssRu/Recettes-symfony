@@ -105,4 +105,43 @@ class RecipeService extends AbstractController
 
         return $recipesToReturn;
     }
+
+    /**
+     * Transform a page number get by url into a page number verified
+     */
+    public function getPageToTrust(string|null $page): int
+    {
+        $pageToTrust = 0;
+        if ($page && intval($page) >= 0) {
+            $pageToTrust = intval($page);
+        }
+        if ($pageToTrust > PHP_INT_MAX) {
+            $this->addFlash('error', 'Vous avez atteint le nombre maximal de pages. Veuillez affiner votre recherche.');
+            $pageToTrust = PHP_INT_MAX;
+        }
+
+        return $pageToTrust;
+    }
+
+    /**
+     * Function used to get the result of a search with pagination
+     * Don't trust in $page, it's a string comming directly from the url
+     */
+    public function getResultsOfSearch(Recipe $params, string $page): array
+    {
+        return $this->recipeRepository->findAllByType(
+            $page,
+            $params
+        );
+    }
+
+    /**
+     * Return the total of pages for these search params
+     */
+    public function getTotalOfPages(Recipe $params): int
+    {
+        return $this->recipeRepository->findTotalOfPages(
+            $params
+        );
+    }
 }
