@@ -7,44 +7,55 @@
         <h1>Trouver des recettes</h1>
 
         {{ form_start(form) }}
-        <div>
-            {{ form_errors(form.types) }}
-            {{ form_label(form.types) }}
-            {{ form_widget(form.types) }}
-            {{ form_help(form.types) }}
-        </div>
-        <div>
-            {{ form_errors(form.allOfThisTypes) }}
-            {{ form_widget(form.allOfThisTypes) }}
-            {{ form_label(form.allOfThisTypes) }}
-            {{ form_help(form.allOfThisTypes) }}
-        </div>
-        <div>
-            {{ form_errors(form.isVegetarian) }}
-            {{ form_widget(form.isVegetarian) }}
-            {{ form_label(form.isVegetarian) }}
-            {{ form_help(form.isVegetarian) }}
-        </div>
-        <div>
-            {{ form_errors(form.isVegan) }}
-            {{ form_widget(form.isVegan) }}
-            {{ form_label(form.isVegan) }}
-            {{ form_help(form.isVegan) }}
-        </div>
-        <button type="submit">
-            Chercher !
-        </button>
+            <div>
+                {{ form_errors(form.types) }}
+                {{ form_label(form.types) }}
+                {{ form_widget(form.types) }}
+                {{ form_help(form.types) }}
+            </div>
+            <div>
+                {{ form_errors(form.isVegetarian) }}
+                {{ form_widget(form.isVegetarian) }}
+                {{ form_label(form.isVegetarian) }}
+                {{ form_help(form.isVegetarian) }}
+            </div>
+            <div>
+                {{ form_errors(form.isVegan) }}
+                {{ form_widget(form.isVegan) }}
+                {{ form_label(form.isVegan) }}
+                {{ form_help(form.isVegan) }}
+            </div>
+            <button type="submit">
+                Chercher !
+            </button>
 
-        {% for recipe in recipes %}
-            {% if not recipe %}
-                <p>Aucune recette trouvée.</p>
-            {% else %}
-                {% include "/bloc/recipe.html.twig" with {'recipe': recipe, 'listMode': true, 'editable': false} %}
+            {# Pagination buttons #}
+            {% if recipes|length > 0 %}
+                <div>
+                    {% if page > 0 %}
+                        <button type="submit" onclick="$('form').attr('action', $('form').attr('action') + ?page={{ page - 1 }})">
+                            < Résultats précédents
+                        </button>
+                    {% endif %}
+                    <span>Page {{ page + 1 }}</span>
+                    {% if page < totalOfPages %}
+                        <button type="submit" onclick="$('form').attr('action', $('form').attr('action') + ?page={{ page + 1 }})">
+                            Résultats suivants >
+                        </button>
+                    {% endif %}
+                </div>
             {% endif %}
-        {% else %}
-            <p>Remplissez le formulaire ci-dessus pour obtenir des résultats.
-        {% endfor %}
-
+            {# End of Pagination buttons #}
         {{ form_end(form) }}
+
+        {% if noRecipeFounded %}
+            <p>Aucune recette trouvée.</p>
+        {% else %}
+            {% for recipe in recipes %}
+                {% include "/bloc/recipe.html.twig" with {'recipe': recipe, 'listMode': true, 'editable': false} %}
+            {% else %}
+                <p>Remplissez le formulaire ci-dessus pour obtenir des résultats.
+            {% endfor %}
+        {% endif %}
     </section>
 {% endblock %}

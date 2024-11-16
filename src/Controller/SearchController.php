@@ -24,17 +24,30 @@ class SearchController extends AbstractController
     {
         $params = new Recipe();
         $recipes = [];
+        $noRecipeFounded = false;
+        $page = $this->recipeService->getPageToTrust($request->query->get('page'));
+        $totalOfPages = 0;
 
-        $form = $this->createForm(RandomFormType::class, $params, []);
+        $form = $this->createForm(RandomFormType::class, $params, [
+            'randomSearch' => false
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $recipes = $this->recipeService->getResultsOfSearch($params);
+            $recipes = $this->recipeService->getResultsOfSearch(
+                $params,
+                $page
+            );
+            if (count($recipes) === 0) $noRecipeFounded = true;
+            else $totalOfPages = $this->recipeService->getTotalOfPages($params);
         }
 
         return $this->render('search/index.html.twig', [
             'form' => $form,
-            'recipes' => $recipes
+            'recipes' => $recipes,
+            'noRecipeFounded' => $noRecipeFounded,
+            'page' => $page,
+            'totalOfPages' => $totalOfPages - 1
         ]);
     }
 

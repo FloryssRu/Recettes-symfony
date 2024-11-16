@@ -7,6 +7,7 @@ use App\Entity\RecipeType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,6 +18,14 @@ class RandomFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        if ($options['randomSearch']) {
+            $builder->add('allOfThisTypes', CheckboxType::class, [
+                'mapped' => false,
+                'label' => 'Une recette de chaque type.',
+                'required' => false,
+            ]);
+        }
+
         $builder
             ->add('types', EntityType::class, [
                 'label' => 'Les types de recettes.',
@@ -24,11 +33,6 @@ class RandomFormType extends AbstractType
                 'choice_label' => 'name',
                 'expanded' => true,
                 'multiple' => true
-            ])
-            ->add('allOfThisTypes', CheckboxType::class, [
-                'mapped' => false,
-                'label' => 'Une recette de chaque type.',
-                'required' => false,
             ])
             ->add('isVegetarian', CheckboxType::class, [
                 'label' => 'Les recettes doivent être végétariennes.',
@@ -78,6 +82,7 @@ class RandomFormType extends AbstractType
     {
         $resolver->setDefaults([
             'class' => Recipe::class,
+            'randomSearch' => true,
         ]);
     }
 }
