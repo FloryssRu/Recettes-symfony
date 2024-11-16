@@ -87,7 +87,7 @@ class RecipeRepository extends ServiceEntityRepository
                 $qb->setParameter('type'.$key, $type);
             }
         }
-        return  $qb;
+        return $qb;
     }
 
     /**
@@ -115,5 +115,15 @@ class RecipeRepository extends ServiceEntityRepository
         $qb->select('count(r.id) as count');
         $results = $qb->getQuery()->getOneOrNullResult();
         return ceil($results['count'] / $this->parameterBag->get('ITEM_BY_PAGE'));
+    }
+
+    public function findLastRecipes(): array
+    {
+        return $this->createQueryBuilder('r')
+            ->setMaxResults(12)
+            ->addOrderBy('r.createdAt')
+            ->getQuery()
+            ->getResult()
+        ;
     }
 }

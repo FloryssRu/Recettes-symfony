@@ -144,4 +144,9 @@ class RecipeService extends AbstractController
             $params
         );
     }
+
+    public function getLastRecipes(): array
+    {
+        return $this->recipeRepository->findLastRecipes();
+    }
 }
