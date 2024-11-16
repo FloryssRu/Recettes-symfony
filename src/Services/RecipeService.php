@@ -116,6 +116,7 @@ class RecipeService extends AbstractController
             $pageToTrust = intval($page);
         }
         if ($pageToTrust > PHP_INT_MAX) {
+            $this->addFlash('error', 'Vous avez atteint le nombre maximal de pages. Veuillez affiner votre recherche.');
             $pageToTrust = PHP_INT_MAX;
         }
 

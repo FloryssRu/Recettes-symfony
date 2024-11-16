@@ -27,7 +27,9 @@ class RandomController extends AbstractController
         $randomParams = new Recipe();
         $recipes = [];
 
-        $form = $this->createForm(RandomFormType::class, $randomParams, []);
+        $form = $this->createForm(RandomFormType::class, $randomParams, [
+            'randomSearch' => true
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
