@@ -28,24 +28,6 @@
             <button type="submit">
                 Chercher !
             </button>
-
-            {# Pagination buttons #}
-            {% if recipes|length > 0 %}
-                <div>
-                    {% if page > 0 %}
-                        <button type="submit" onclick="$('form').attr('action', $('form').attr('action') + ?page={{ page - 1 }})">
-                            < Résultats précédents
-                        </button>
-                    {% endif %}
-                    <span>Page {{ page + 1 }}</span>
-                    {% if page < totalOfPages %}
-                        <button type="submit" onclick="$('form').attr('action', $('form').attr('action') + ?page={{ page + 1 }})">
-                            Résultats suivants >
-                        </button>
-                    {% endif %}
-                </div>
-            {% endif %}
-            {# End of Pagination buttons #}
         {{ form_end(form) }}
 
         {% if noRecipeFounded %}
@@ -56,6 +38,41 @@
             {% else %}
                 <p>Remplissez le formulaire ci-dessus pour obtenir des résultats.
             {% endfor %}
+
+            {# Pagination buttons #}
+            {% if recipes|length > 0 %}
+                <div>
+                    {% if page > 0 %}
+                        <button onclick="goToPrevPage({{ page }})">
+                            < Résultats précédents
+                        </button>
+                    {% endif %}
+                    <span>Page {{ page + 1 }}</span>
+                    {% if page < totalOfPages %}
+                        <button onclick="goToNextPage({{ page }})">
+                            Résultats suivants >
+                        </button>
+                    {% endif %}
+                </div>
+            {% endif %}
+            {# End of Pagination buttons #}
         {% endif %}
     </section>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        const changePage = function(page) {
+            $('form').attr('action', '?page=' + page);
+            $('button[type=submit]').click();
+        }
+
+        const goToNextPage = function(actualPage) {
+            changePage(actualPage + 1);
+        }
+
+        const goToPrevPage = function(actualPage) {
+            changePage(actualPage - 1);
+        }
+    </script>
 {% endblock %}
