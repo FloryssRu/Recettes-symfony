@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Recipe;
+use App\Entity\User;
 use App\Form\RandomFormType;
 use App\Repository\RecipeRepository;
 use App\Services\RecipeService;
@@ -64,17 +65,31 @@ class SearchController extends AbstractController
             $this->addFlash('error', "Cette recette n'existe pas.");
             return $this->redirectToRoute('app_search');
         }
-        return $this->render('search/recipe.html.twig', [
-            'recipe' => $recipe
-        ]);
+
+        $params = ['recipe' => $recipe];
+
+        if ($this->getUser()) {
+            $params['iLikedThisRecipe'] = in_array($this->getUser(), $recipe->getLikedUsers()->toArray());
+        }
+
+        return $this->render('search/recipe.html.twig', $params);
     }
 
     /**
      * Page which allows user to like/unlike a recipe
      */
-    #[Route('/liker/{id<[0-9]+>}/{like<[0-1]>', name: 'app_like', methods: ['POST'])]
-    public function likeRecipe(int $id): Response
+    #[Route('/liker/{id<[0-9]+>}/{like<[0-1]>}', name: 'app_like', methods: ['GET'])]
+    public function likeRecipe(int $id, int $like): Response
     {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $recipe = $this->recipeRepository->find($id);
+
+        if ($recipe) {
+            $this->recipeService->changeLikeRecipe($user, $recipe, $like == 1);
+        }
+        
         return $this->redirectToRoute('app_recipe', ['id' => $id]);
     }
 }

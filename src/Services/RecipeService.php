@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Entity\Recipe;
+use App\Entity\User;
 use App\Repository\RecipeRepository;
 use App\Repository\RecipeTypeRepository;
 use App\Repository\SeasonRepository;
@@ -145,8 +146,26 @@ class RecipeService extends AbstractController
         );
     }
 
+    /**
+     * Returns the 12 last recipes
+     */
     public function getLastRecipes(): array
     {
         return $this->recipeRepository->findLastRecipes();
+    }
+
+    /**
+     * Change the like of the user for the recipe
+     */
+    public function changeLikeRecipe(User $user, Recipe $recipe, bool $like): void
+    {
+        if ($like) {
+            $recipe->addLikedUser($user);
+        } else {
+            $recipe->removeLikedUser($user);
+        }
+
+        $this->manager->persist($recipe);
+        $this->manager->flush();
     }
 }
