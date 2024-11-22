@@ -1,6 +1,14 @@
 <article>
     <h2>{{ recipe.name }}</h2>
-    <p>{{ recipe.likedUsers|length }} ❤️</p>
+    {% if listMode or iLikedThisRecipe is not defined %}
+        <p>{{ recipe.likedUsers|length }} ❤️</p>
+    {% else %}
+        {% if iLikedThisRecipe %}
+            <p><a href="{{ path('app_like', {id: recipe.id, like: 0}) }}">{{ recipe.likedUsers|length }} ❤️</a></p>
+        {% else %}
+            <p><a href="{{ path('app_like', {id: recipe.id, like: 1}) }}">{{ recipe.likedUsers|length }} ❤️</a></p>
+        {% endif %}
+    {% endif %}
     <p>Par {{ recipe.owner.pseudo }}, le {{ recipe.createdAt|date('Y/m/d') }}</p>
 
     {% if listMode %}
