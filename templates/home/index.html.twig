@@ -2,10 +2,82 @@
 
 {% block title %}Accueil{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="owlcarousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="owlcarousel/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/css/carousel.css">
+{% endblock %}
+
 {% block body %}
-<div class="example-wrapper">
     <h1>Bienvenue</h1>
 
-    {# lists of blocs for home page to insert here #}
-</div>
+    <section>
+        <p>Je cherche une recette</p>
+        <button><a href="{{ path('app_search') }}">Par ici !</a></button>
+    </section>
+
+    {# Carrousel #}
+    <section>
+        {% if recipes|length > 0%}
+            <div class="owl-carousel owl-theme">
+                {% for recipe in recipes %}
+                    <a class="owl-item" href="{{ path("app_recipe", {'id': recipe.id }) }}">
+                        <div class="item">
+                            <p class="card-text text-center">{{ recipe.name }}</p>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>Aucune recette n'a été publiée.</p>
+        {% endif %}
+    </section>
+
+    {# ligne de flotaison #}
+
+    <section>
+        <p>Crée tes recettes !</p>
+        <button><a href="{{ path('app_myrecipes') }}">C'est parti !</a></button>
+    </section>
+
+    <section>
+        <p>Qu'est-ce qu'on mange ?</p>
+        <button><a href="{{ path('app_random') }}">J'ai faim !</a></button>
+    </section>
+
+    {# > planificateur (to do) #}
+    <section>
+        <p>J'ai besoin de planifier</p>
+        <button><a href="#">Mon calendrier</a></button>
+    </section>
+
+    {# > recap courses (to do) #}
+    <section>
+        <p>Qu'est ce que je dois acheter ?</p>
+        <button><a href="#">Ma liste de courses</a></button>
+    </section>
+{% endblock %}
+
+{% block end_javascripts %}
+    {# carousel owl #}
+    <script src="owlcarousel/owl.carousel.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $(".owl-carousel").owlCarousel({
+                items:3,
+                loop:true,
+                margin:5,
+                nav:true,
+                autoplay:true,
+                autoplayTimeout:2500,
+                autoplayHoverPause:true,
+                responsive:{
+                    0:{items:1},
+                    600:{items:2},
+                    900:{items:3},
+                    1200:{items:4}
+                }
+            });
+        });
+    </script>
 {% endblock %}

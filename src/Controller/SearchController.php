@@ -59,7 +59,7 @@ class SearchController extends AbstractController
     #[Route('/recette/{id<[0-9]+>}', name: 'app_recipe', methods: ['GET'])]
     public function recipeDetails(int $id): Response
     {
-        $recipe = $this->recipeRepository->findOneById($id);
+        $recipe = $this->recipeRepository->find($id);
         if (!$recipe) {
             $this->addFlash('error', "Cette recette n'existe pas.");
             return $this->redirectToRoute('app_search');

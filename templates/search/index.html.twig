@@ -47,7 +47,7 @@
                             < Résultats précédents
                         </button>
                     {% endif %}
-                    <span>Page {{ page + 1 }}</span>
+                    <span>Page {{ page + 1 }} / {{ totalOfPages + 1 }}</span>
                     {% if page < totalOfPages %}
                         <button onclick="goToNextPage({{ page }})">
                             Résultats suivants >

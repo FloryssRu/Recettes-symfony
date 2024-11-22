@@ -1,0 +1,42 @@
+.owl-carousel {
+    opacity: 1 !important;
+}
+
+.owl-carousel a.owl-item {
+    color: white;
+    text-decoration: none;
+    width: 25%;
+}
+
+.owl-carousel .owl-item .item {
+    height: 200px;
+    background-image:
+      linear-gradient(
+        rgba(0, 0, 0, 0.5),
+        rgba(0, 0, 0, 0.5)
+      ),
+      url("/img/cake.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border: 2px solid grey;
+}
+
+@media screen and (max-width: 600px) {
+    .owl-carousel .owl-item {
+        width: 100%;
+    }
+}
+@media screen and (max-width: 900px) {
+    .owl-carousel .owl-item {
+        width: 50%;
+    }
+}
+@media screen and (max-width: 1200px) {
+    .owl-carousel .owl-item {
+        width: 33%;
+    }
+}
