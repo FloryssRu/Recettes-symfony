@@ -2,10 +2,27 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
 use App\Repository\IngredientRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: IngredientRepository::class)]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new GetCollection(),
+        new Post(),
+        new Put(),
+        new Delete()
+    ],
+    paginationEnabled: false
+)]
 class Ingredient
 {
     #[ORM\Id]
@@ -14,12 +31,15 @@ class Ingredient
     private ?int $id = null;
 
     #[ORM\Column(length: 120)]
+    #[Groups(['recipe:item'])]
     private ?string $name = null;
 
     #[ORM\Column]
+    #[Groups(['recipe:item'])]
     private ?int $number = null;
 
     #[ORM\ManyToOne]
+    #[Groups(['recipe:item'])]
     private ?MeasureUnit $measureUnit = null;
 
     #[ORM\ManyToOne(inversedBy: 'ingredients')]

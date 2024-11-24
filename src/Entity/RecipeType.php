@@ -2,12 +2,23 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\RecipeTypeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: RecipeTypeRepository::class)]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new GetCollection(),
+    ],
+    paginationEnabled: false
+)]
 class RecipeType
 {
     #[ORM\Id]
@@ -16,6 +27,7 @@ class RecipeType
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
+    #[Groups(['recipe:list', 'recipe:item'])]
     private ?string $name = null;
 
     public function __toString(): string

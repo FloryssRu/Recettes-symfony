@@ -2,36 +2,61 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
 use App\Repository\RecipeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: RecipeRepository::class)]
+#[ApiResource(
+    operations: [
+        new Get(normalizationContext: ['groups' => 'recipe:item']),
+        new GetCollection(normalizationContext: ['groups' => 'recipe:list']),
+        new Post(normalizationContext: ['groups' => 'recipe:create']),
+        new Put(normalizationContext: ['groups' => 'recipe:edit']),
+        new Delete(normalizationContext: ['groups' => 'recipe:delete'])
+    ],
+    order: ['id' => 'DESC'],
+    paginationEnabled: true,
+)]
 class Recipe
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['recipe:list', 'recipe:item'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
+    #[Groups(['recipe:list', 'recipe:item'])]
     private ?string $name = null;
 
     #[ORM\ManyToOne(inversedBy: 'recipes')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['recipe:list', 'recipe:item'])]
     private ?User $owner = null;
 
     #[ORM\Column]
+    #[Groups(['recipe:list', 'recipe:item'])]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['recipe:list', 'recipe:item'])]
     private ?int $preparationTime = null;
 
     #[ORM\Column]
+    #[Groups(['recipe:list', 'recipe:item'])]
     private ?bool $isVegetarian = null;
 
     #[ORM\Column]
+    #[Groups(['recipe:list', 'recipe:item'])]
     private ?bool $isVegan = null;
 
     /**
@@ -43,6 +68,7 @@ class Recipe
         orphanRemoval: true,
         cascade: ['persist']
     )]
+    #[Groups(['recipe:list', 'recipe:item'])]
     private Collection $steps;
 
     /**
@@ -54,18 +80,21 @@ class Recipe
         orphanRemoval: true,
         cascade: ['persist']
     )]
+    #[Groups(['recipe:list', 'recipe:item'])]
     private Collection $ingredients;
 
     /**
      * @var Collection<int, Season>
      */
     #[ORM\ManyToMany(targetEntity: Season::class, mappedBy: 'recipes')]
+    #[Groups(['recipe:list', 'recipe:item'])]
     private Collection $seasons;
 
     /**
      * @var Collection<int, RecipeType>
      */
     #[ORM\ManyToMany(targetEntity: RecipeType::class, mappedBy: 'recipes')]
+    #[Groups(['recipe:list', 'recipe:item'])]
     private Collection $types;
 
     /**
