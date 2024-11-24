@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Recipe;
 use App\Form\RecipeFormType;
 use App\Repository\RecipeRepository;
+use App\Security\RecipeVoter;
 use App\Services\RecipeService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -48,8 +49,11 @@ class RecipeController extends AbstractController
     #[Route('/{id<[0-9]+>}', name: 'app_myrecipes_form', methods: ['GET', 'POST'])]
     public function myRecipesForm(int $id, Request $request): Response
     {
-        if ($id !== 0) $recipe = $this->recipeRepository->find($id);
-        else $recipe = new Recipe();
+        if ($id !== 0) {
+            $recipe = $this->recipeRepository->find($id);
+            // We verify user rights to see this recipe
+            $this->denyAccessUnlessGranted(RecipeVoter::VIEW, $recipe);
+        } else $recipe = new Recipe();
 
         $form = $this->createForm(RecipeFormType::class, $recipe, []);
         $form->handleRequest($request);
@@ -73,6 +77,9 @@ class RecipeController extends AbstractController
     #[Route('/suppression/{id<[0-9]+>}', name: 'app_myrecipes_delete', methods: ['POST'])]
     public function myRecipesDelete(Recipe $recipe): Response
     {
+        // We verify user rights to delete this recipe
+        $this->denyAccessUnlessGranted(RecipeVoter::DELETE, $recipe);
+
         $this->manager->remove($recipe);
         $this->manager->flush();
         $this->addFlash('success', 'La recette a bien été supprimée.');
