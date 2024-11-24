@@ -9,13 +9,13 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 class RecipeVoter extends Voter
 {
-    const VIEW = 'view';
+    const EDIT = 'edit';
     const DELETE = 'delete';
 
     protected function supports(string $attribute, mixed $subject): bool
     {
         // If the attribute is not in available options, quit process
-        if (!in_array($attribute, [self::VIEW, self::DELETE])) {
+        if (!in_array($attribute, [self::EDIT, self::DELETE])) {
             return false;
         }
 

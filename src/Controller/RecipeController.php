@@ -52,7 +52,7 @@ class RecipeController extends AbstractController
         if ($id !== 0) {
             $recipe = $this->recipeRepository->find($id);
             // We verify user rights to see this recipe
-            $this->denyAccessUnlessGranted(RecipeVoter::VIEW, $recipe);
+            $this->denyAccessUnlessGranted(RecipeVoter::EDIT, $recipe);
         } else $recipe = new Recipe();
 
         $form = $this->createForm(RecipeFormType::class, $recipe, []);
