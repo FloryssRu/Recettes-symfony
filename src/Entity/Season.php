@@ -2,12 +2,23 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\SeasonRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: SeasonRepository::class)]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new GetCollection(),
+    ],
+    paginationEnabled: false
+)]
 class Season
 {
     #[ORM\Id]
@@ -16,6 +27,7 @@ class Season
     private ?int $id = null;
 
     #[ORM\Column(length: 30)]
+    #[Groups(['recipe:list', 'recipe:item'])]
     private ?string $name = null;
 
     /**

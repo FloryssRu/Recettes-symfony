@@ -12,15 +12,26 @@ use App\Entity\User;
 use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
     public function __construct(
-        private readonly UserPasswordHasherInterface $passwordHasher
+        private readonly UserPasswordHasherInterface $passwordHasher,
+        protected ParameterBagInterface $parameterBag
     ) {}
 
     public function load(ObjectManager $manager): void
+    {
+        $this->loadFixturesBase($manager);
+        $this->loadFixturesApi($manager);
+    }
+
+    /**
+     * Load the base of objects to have test objects
+     */
+    private function loadFixturesBase(ObjectManager $manager): void
     {
         $user = new User();
         $user
@@ -89,6 +100,24 @@ class AppFixtures extends Fixture
         ;
         $manager->persist($recipe);
 
+        $manager->flush();
+    }
+
+    /**
+     * Load the user to request the api
+     */
+    private function loadFixturesApi(ObjectManager $manager): void
+    {
+        $user = new User();
+        $user
+            ->setPseudo('API_User')
+            ->setRoles(['ROLE_API'])
+            ->setPassword($this->passwordHasher->hashPassword(
+                $user,
+                $this->parameterBag->get('PWD_API_USER')
+            ))
+        ;
+        $manager->persist($user);
         $manager->flush();
     }
 }
