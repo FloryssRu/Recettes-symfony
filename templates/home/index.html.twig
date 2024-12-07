@@ -13,7 +13,7 @@
 
     <section>
         <p>Je cherche une recette</p>
-        <button><a href="{{ path('app_search') }}">Par ici !</a></button>
+        <a href="{{ path('app_search') }}"><button>Par ici !</button></a>
     </section>
 
     {# Carrousel #}
@@ -37,24 +37,24 @@
 
     <section>
         <p>Crée tes recettes !</p>
-        <button><a href="{{ path('app_myrecipes') }}">C'est parti !</a></button>
+        <a href="{{ path('app_myrecipes') }}"><button>C'est parti !</button></a>
     </section>
 
     <section>
         <p>Qu'est-ce qu'on mange ?</p>
-        <button><a href="{{ path('app_random') }}">J'ai faim !</a></button>
+        <a href="{{ path('app_random') }}"><button>J'ai faim !</button></a>
     </section>
 
     {# > planificateur (to do) #}
     <section>
         <p>J'ai besoin de planifier</p>
-        <button><a href="#">Mon calendrier</a></button>
+        <a href="#"><button>Mon calendrier</button></a>
     </section>
 
     {# > recap courses (to do) #}
     <section>
         <p>Qu'est ce que je dois acheter ?</p>
-        <button><a href="#">Ma liste de courses</a></button>
+        <a href="#"><button>Ma liste de courses</button></a>
     </section>
 {% endblock %}
 
