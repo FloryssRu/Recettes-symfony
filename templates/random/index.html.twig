@@ -3,9 +3,9 @@
 {% block title %}Recettes random{% endblock %}
 
 {% block body %}
-    <section>
-        <h1>Trouver des recettes</h1>
+    <h1>Recettes aléatoires</h1>
 
+    <section>
         {{ form_start(form) }}
             <div>
                 {{ form_errors(form.types) }}
@@ -35,17 +35,19 @@
                 Chercher !
             </button>
         {{ form_end(form) }}
+    </section>
 
+    <div class="flex-container">
         {% for recipe in recipes %}
             {% if not recipe and recipes|length > 1 %}
                 <p>Aucune recette du type {{ types[loop.index - 1].name }} trouvée.</p>
             {% elseif not recipe %}
-                <p>Aucune recette trouvée.</p>
+                <section>
+                    <p>Aucune recette trouvée.</p>
+                </section>
             {% else %}
                 {% include "/bloc/recipe.html.twig" with {'recipe': recipe, 'listMode': true, 'editable': false} %}
             {% endif %}
-        {% else %}
-            <p>Remplissez le formulaire ci-dessus pour obtenir des recettes aléatoires.
         {% endfor %}
-    </section>
+    </div>
 {% endblock %}

@@ -15,16 +15,16 @@
         </button>
     </a>
 
-    <section>
-        <h1>
-            {% if recipe and recipe.name %}
-                {{ recipe.name }}
-            {% else %}
-                Nouvelle recette
-            {% endif %}
-        </h1>
+    <h1>
+        {% if recipe and recipe.name %}
+            {{ recipe.name }}
+        {% else %}
+            Nouvelle recette
+        {% endif %}
+    </h1>
 
-        {{ form_start(form) }}
+    <section>
+        {{ form_start(form, {'attr': {'class': 'form-center'}}) }}
         <div>
             {{ form_errors(form.name) }}
             {{ form_label(form.name) }}
