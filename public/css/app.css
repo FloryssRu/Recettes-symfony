@@ -1,13 +1,14 @@
 :root {
-    --grey: #F3F5F3;
-    --grey-dark: #C8CBC8;
+    --white: #F3F5F3;
+    --grey: #C8CBC8;
+    --grey-dark: #858785;
     --blue: #4B6289;
     --orange: #FFAC00;
     --brown: #986358;
 }
 
 body {
-    background-color: var(--grey);
+    background-color: var(--white);
     font-family: 'Roboto', 'Open Sans', 'Arial';
     color: black;
 }
@@ -41,7 +42,7 @@ header li {
 }
 
 header a {
-    color: var(--grey);
+    color: var(--white);
     text-decoration: none;
 }
 /** endregion Navigation **/
@@ -55,7 +56,7 @@ section {
     margin: 15px;
     background-color: white;
     border-radius: 10px;
-    box-shadow: 2px 2px 6px var(--grey-dark);
+    box-shadow: 2px 2px 6px var(--grey);
     padding: 10px;
 }
 /** endregion Navigation **/
@@ -72,12 +73,17 @@ button {
     color: white;
 }
 button:hover {
-    box-shadow: 3px 3px 6px var(--grey-dark);
+    box-shadow: 3px 3px 6px var(--grey);
 }
 a button {
     text-decoration: none;
 }
+div.params {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
 p.param {
+    margin: 0;
     border-radius: 20px;
     padding-left: 15px;
     padding-right: 15px;
@@ -87,7 +93,6 @@ p.param {
     background-color: var(--grey-dark);
     color: white;
     display: inline;
-    margin-bottom: 10px;
 }
 p.param.orange {
     background-color: var(--orange);
@@ -140,17 +145,17 @@ form.form-center button[type='submit'] {
     width: 45%;
     background-color: white;
     border-radius: 10px;
-    box-shadow: 2px 2px 6px var(--grey-dark);
+    box-shadow: 2px 2px 6px var(--grey);
 }
 .flex-container .item .img-container {
-    max-width : 100%;
+    max-width: 100%;
     max-height: 200px;
     overflow: hidden;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
 .flex-container .item .img-container img {
-    max-width : 100%;
+    max-width: 100%;
     max-height: 100%;
     transform: translateY(-25%);
 }
@@ -173,6 +178,11 @@ form.form-center button[type='submit'] {
 /** endregion Containers and items **/
 
 /** region Recipe page **/
+.recipe-container {
+    width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+}
 .recipe-container .img-container {
     width: auto;
     height: 300px;
@@ -181,7 +191,7 @@ form.form-center button[type='submit'] {
     margin: 15px;
 }
 .recipe-container .img-container img {
-    max-width : 100%;
+    width: 100%;
     transform: translateY(-25%);
 }
 .recipe-container .item-container {
@@ -211,7 +221,7 @@ form.form-center button[type='submit'] {
     margin-bottom: 0;
 }
 .recipe-container section.preparation {
-    width : 58%;
+    width: 60%;
 }
 .recipe-container section.preparation h3 {
     margin-bottom: 20px;
@@ -221,10 +231,80 @@ form.form-center button[type='submit'] {
     padding-left: 0;
 }
 .recipe-container section.preparation li {
-    margin-bottom: 40px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+.recipe-container section.preparation li p.param {
+    margin-right: 15px;
 }
 .recipe-container section.preparation li:last-of-type {
     margin-bottom: 0px;
+}
+
+@media screen and (max-width: 1200px) {
+    .recipe-container {
+        width: 850px;
+    }
+    .recipe-container section.ingredients {
+        width: 28%;
+    }
+    .recipe-container section.preparation {
+        width: 58%;
+    }
+}
+@media screen and (max-width: 900px) {
+    .recipe-container {
+        width: 530px;
+    }
+    .recipe-container .img-container {
+        height: 200px;
+    }
+    .recipe-container .end-recipe {
+        flex-direction: column;
+    }
+    .recipe-container section.ingredients {
+        width: 100%;
+        margin-bottom: 15px;
+        padding: 0;
+    }
+    .recipe-container section.ingredients .end-recipe-bloc {
+        margin: 15px;
+    }
+    .recipe-container section.preparation {
+        width: 100%;
+        padding: 0;
+    }
+    .recipe-container section.preparation .end-recipe-bloc {
+        margin: 15px;
+    }
+}
+@media screen and (max-width: 600px) {
+    .recipe-container {
+        width: 400px;
+    }
+    .recipe-container .img-container {
+        height: 150px;
+    }
+    .recipe-container .end-recipe {
+        flex-direction: column;
+    }
+    .recipe-container section.ingredients {
+        width: 100%;
+        margin-bottom: 15px;
+        padding: 0;
+    }
+    .recipe-container section.ingredients .end-recipe-bloc {
+        margin: 15px;
+    }
+    .recipe-container section.preparation {
+        width: 100%;
+        padding: 0;
+    }
+    .recipe-container section.preparation .end-recipe-bloc {
+        margin: 15px;
+    }
 }
 /** endregion Recipe page **/
 
@@ -264,5 +344,4 @@ form.form-center button[type='submit'] {
 .pb-10 {
     padding-bottom: 10px;
 }
-
 /** endregion utils **/

@@ -4,7 +4,10 @@
     </div>
     <div class="item-container">
         <div class="first-line">
-            <h2 class="title">{{ recipe.name }}</h2>
+            <div class="title">
+                <h2>{{ recipe.name }}</h2>
+                <p>Par {{ recipe.owner.pseudo }}, le {{ recipe.createdAt|date('Y/m/d') }}</p>
+            </div>
             {% if listMode or iLikedThisRecipe is not defined %}
                 <p>{{ recipe.likedUsers|length }} ❤️</p>
             {% else %}
@@ -23,7 +26,6 @@
                 {% endif %}
             {% endif %}
         </div>
-        <p>Par {{ recipe.owner.pseudo }}, le {{ recipe.createdAt|date('Y/m/d') }}</p>
 
         {% if listMode %}
             <a href="{{ path('app_recipe', {id: recipe.id })}}">
@@ -43,44 +45,50 @@
         {% endif %}
 
         {% if not listMode %}
-            {% for type in recipe.types %}
-                <p class="param">{{ type }}</p>
-            {% endfor %}
-            <p class="param">{{ recipe.preparationTime }} min</p>
-            {% if recipe.isVegetarian %}
-                <p class="param">Végétarienne</p>
-            {% endif %}
-            {% if recipe.isVegan %}
-                <p class="param">Végan</p>
-            {% endif %}
-            {% for season in recipe.seasons %}
-                <p class="param">{{ season }}</p>
-            {% endfor %}
+            <div class="params">
+                {% for type in recipe.types %}
+                    <p class="param">{{ type }}</p>
+                {% endfor %}
+                <p class="param">{{ recipe.preparationTime }} min</p>
+                {% if recipe.isVegetarian %}
+                    <p class="param">Végétarienne</p>
+                {% endif %}
+                {% if recipe.isVegan %}
+                    <p class="param">Végan</p>
+                {% endif %}
+                {% for season in recipe.seasons %}
+                    <p class="param">{{ season }}</p>
+                {% endfor %}
+            </div>
 
             <div class="end-recipe">
                 <section class="ingredients">
-                    <h3>Ingrédients</h3>
-                    <ul>
-                        {% for ingredient in recipe.ingredients %}
-                            <li class="flex-container space-between">
-                                <span>{{ ingredient.name }}</span>
-                                <span>{{ ingredient.number }} {{ ingredient.measureUnit }}</span>
-                            </li>
-                        {% endfor %}
-                    </ul>
+                    <div class="end-recipe-bloc">
+                        <h3>Ingrédients</h3>
+                        <ul>
+                            {% for ingredient in recipe.ingredients %}
+                                <li class="flex-container space-between">
+                                    <span>{{ ingredient.name }}</span>
+                                    <span>{{ ingredient.number }} {{ ingredient.measureUnit }}</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </section>
 
                 <section class="preparation">
-                    <h3>Préparation</h3>
-                    <ul>
-                        {# order steps by step.number #}
-                        {% for step in recipe.steps %}
-                            <li>
-                                <p class="param orange">{{ step.number }}</p>
-                                <span>{{ step.description }}</span>
-                            </li>
-                        {% endfor %}
-                    </ul>
+                    <div class="end-recipe-bloc">
+                        <h3>Préparation</h3>
+                        <ul>
+                            {# order steps by step.number #}
+                            {% for step in recipe.steps %}
+                                <li>
+                                    <p class="param orange">{{ step.number }}</p>
+                                    <span class="mt-10">{{ step.description }}</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </section>
             </div>
         {% endif %}
