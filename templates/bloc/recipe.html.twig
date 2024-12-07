@@ -1,59 +1,74 @@
-<article>
-    <h2>{{ recipe.name }}</h2>
-    {% if listMode or iLikedThisRecipe is not defined %}
-        <p>{{ recipe.likedUsers|length }} ❤️</p>
-    {% else %}
-        {% if iLikedThisRecipe %}
-            <p><a href="{{ path('app_like', {id: recipe.id, like: 0}) }}">{{ recipe.likedUsers|length }} ❤️</a></p>
-        {% else %}
-            <p><a href="{{ path('app_like', {id: recipe.id, like: 1}) }}">{{ recipe.likedUsers|length }} ❤️</a></p>
-        {% endif %}
-    {% endif %}
-    <p>Par {{ recipe.owner.pseudo }}, le {{ recipe.createdAt|date('Y/m/d') }}</p>
+<article {% if listMode %} class="item" {% endif %}>
+    <div class="img-container">
+        <img src="/img/cake.jpg" alt="{{ recipe.name }}">
+    </div>
+    <div class="item-container">
+        <div class="first-line">
+            <h2 class="title">{{ recipe.name }}</h2>
+            {% if listMode or iLikedThisRecipe is not defined %}
+                <p>{{ recipe.likedUsers|length }} ❤️</p>
+            {% else %}
+                {% if iLikedThisRecipe %}
+                    <p class="liked-users">
+                        <a href="{{ path('app_like', {id: recipe.id, like: 0}) }}">
+                        {{ recipe.likedUsers|length }} ❤️
+                        </a>
+                    </p>
+                {% else %}
+                    <p class="liked-users">
+                        <a href="{{ path('app_like', {id: recipe.id, like: 1}) }}">
+                            {{ recipe.likedUsers|length }} ❤️
+                        </a>
+                    </p>
+                {% endif %}
+            {% endif %}
+        </div>
+        <p>Par {{ recipe.owner.pseudo }}, le {{ recipe.createdAt|date('Y/m/d') }}</p>
 
-    {% if listMode %}
-        <a href="{{ path('app_recipe', {id: recipe.id })}}">
-            <button>Voir</button>
-        </a>
-    {% endif %}
-        
-    {% if listMode and editable %}
-        <a href="{{ path('app_myrecipes_form', {id: recipe.id })}}">
-            <button>Editer</button>
-        </a>
-        <form method="post" action="{{ path('app_myrecipes_delete', {id: recipe.id })}}">
-            <button type="submit" onclick="confirm('Etes-vous sûr de supprimer cette recette ?')">
-                Supprimer
-            </button>
-        </form>
-    {% endif %}
-
-    {% if not listMode %}
-        <p>Types : {{ recipe.types|join(', ') }}</p>
-        <p>Temps de préparation : {{ recipe.preparationTime }} min</p>
-        {% if recipe.isVegetarian %}
-            <p>Cette recette est végétarienne</p>
+        {% if listMode %}
+            <a href="{{ path('app_recipe', {id: recipe.id })}}">
+                <button>Voir</button>
+            </a>
         {% endif %}
-        {% if recipe.isVegan %}
-            <p>Cette recette est végan</p>
-        {% endif %}
-        {% if recipe.seasons|length > 0 %}
-            <p>Cette recette est à faire en {{ recipe.seasons|join(', ') }}</p>
+            
+        {% if listMode and editable %}
+            <a href="{{ path('app_myrecipes_form', {id: recipe.id })}}">
+                <button>Editer</button>
+            </a>
+            <form method="post" action="{{ path('app_myrecipes_delete', {id: recipe.id })}}">
+                <button type="submit" onclick="confirm('Etes-vous sûr de supprimer cette recette ?')">
+                    Supprimer
+                </button>
+            </form>
         {% endif %}
 
-        <h3>Ingrédients</h3>
-        <ul>
-            {% for ingredient in recipe.ingredients %}
-                <li>{{ ingredient.name }} : {{ ingredient.number }}{{ ingredient.measureUnit }}</li>
-            {% endfor %}
-        </ul>
+        {% if not listMode %}
+            <p>Types : {{ recipe.types|join(', ') }}</p>
+            <p>Temps de préparation : {{ recipe.preparationTime }} min</p>
+            {% if recipe.isVegetarian %}
+                <p>Cette recette est végétarienne</p>
+            {% endif %}
+            {% if recipe.isVegan %}
+                <p>Cette recette est végan</p>
+            {% endif %}
+            {% if recipe.seasons|length > 0 %}
+                <p>Cette recette est à faire en {{ recipe.seasons|join(', ') }}</p>
+            {% endif %}
 
-        <h3>Préparation</h3>
-        <ul>
-            {# order steps by step.number #}
-            {% for step in recipe.steps %}
-                <li>{{ step.description }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+            <h3>Ingrédients</h3>
+            <ul>
+                {% for ingredient in recipe.ingredients %}
+                    <li>{{ ingredient.name }} : {{ ingredient.number }}{{ ingredient.measureUnit }}</li>
+                {% endfor %}
+            </ul>
+
+            <h3>Préparation</h3>
+            <ul>
+                {# order steps by step.number #}
+                {% for step in recipe.steps %}
+                    <li>{{ step.description }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
 </article>

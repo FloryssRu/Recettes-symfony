@@ -3,9 +3,9 @@
 {% block title %}Recherche de recettes{% endblock %}
 
 {% block body %}
-    <section>
-        <h1>Trouver des recettes</h1>
+    <h1>Trouver des recettes</h1>
 
+    <section>
         {{ form_start(form) }}
             <div>
                 {{ form_errors(form.types) }}
@@ -29,35 +29,37 @@
                 Chercher !
             </button>
         {{ form_end(form) }}
+    </section>
 
-        {% if noRecipeFounded %}
+    {% if noRecipeFounded %}
+        <section>
             <p>Aucune recette trouvée.</p>
-        {% else %}
+        </section>
+    {% else %}
+        <div class="flex-container">
             {% for recipe in recipes %}
                 {% include "/bloc/recipe.html.twig" with {'recipe': recipe, 'listMode': true, 'editable': false} %}
-            {% else %}
-                <p>Remplissez le formulaire ci-dessus pour obtenir des résultats.</p>
             {% endfor %}
+        </div>
 
-            {# Pagination buttons #}
-            {% if recipes|length > 0 %}
-                <div>
-                    {% if page > 0 %}
-                        <button onclick="goToPrevPage({{ page }})">
-                            < Résultats précédents
-                        </button>
-                    {% endif %}
-                    <span>Page {{ page + 1 }} / {{ totalOfPages + 1 }}</span>
-                    {% if page < totalOfPages %}
-                        <button onclick="goToNextPage({{ page }})">
-                            Résultats suivants >
-                        </button>
-                    {% endif %}
-                </div>
-            {% endif %}
-            {# End of Pagination buttons #}
-        {% endif %}
-    </section>
+        {# Pagination buttons #}
+        {% if recipes|length > 0 %}
+            <div class="paginator">
+                {% if page > 0 %}
+                    <button onclick="goToPrevPage({{ page }})">
+                        < Résultats précédents
+                    </button>
+                {% endif %}
+                <span>Page {{ page + 1 }} / {{ totalOfPages + 1 }}</span>
+                {% if page < totalOfPages %}
+                    <button onclick="goToNextPage({{ page }})">
+                        Résultats suivants >
+                    </button>
+                {% endif %}
+            </div>
+         {% endif %}
+        {# End of Pagination buttons #}
+    {% endif %}
 {% endblock %}
 
 {% block javascripts %}
