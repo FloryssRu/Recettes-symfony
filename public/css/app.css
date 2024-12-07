@@ -171,6 +171,9 @@ form.form-center button[type='submit'] {
 .item-container .first-line * {
     margin: 0;
 }
+.item-container .first-line button {
+    margin-left: 10px;
+}
 .paginator {
     text-align: right;
     margin-right: 15px;

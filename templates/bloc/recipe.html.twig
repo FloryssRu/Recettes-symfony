@@ -8,41 +8,43 @@
                 <h2>{{ recipe.name }}</h2>
                 <p>Par {{ recipe.owner.pseudo }}, le {{ recipe.createdAt|date('Y/m/d') }}</p>
             </div>
-            {% if listMode or iLikedThisRecipe is not defined %}
-                <p>{{ recipe.likedUsers|length }} ❤️</p>
-            {% else %}
-                {% if iLikedThisRecipe %}
-                    <p class="liked-users">
-                        <a href="{{ path('app_like', {id: recipe.id, like: 0}) }}">
-                            {{ recipe.likedUsers|length }} ❤️
-                        </a>
-                    </p>
+            <div class="flex-container">
+                {% if listMode or iLikedThisRecipe is not defined %}
+                    <p>{{ recipe.likedUsers|length }} ❤️</p>
                 {% else %}
-                    <p class="liked-users">
-                        <a href="{{ path('app_like', {id: recipe.id, like: 1}) }}">
-                            {{ recipe.likedUsers|length }} ❤️
-                        </a>
-                    </p>
+                    {% if iLikedThisRecipe %}
+                        <p class="liked-users">
+                            <a href="{{ path('app_like', {id: recipe.id, like: 0}) }}">
+                                {{ recipe.likedUsers|length }} ❤️
+                            </a>
+                        </p>
+                    {% else %}
+                        <p class="liked-users">
+                            <a href="{{ path('app_like', {id: recipe.id, like: 1}) }}">
+                                {{ recipe.likedUsers|length }} ❤️
+                            </a>
+                        </p>
+                    {% endif %}
                 {% endif %}
-            {% endif %}
-        </div>
 
-        {% if listMode %}
-            <a href="{{ path('app_recipe', {id: recipe.id })}}">
-                <button>Voir</button>
-            </a>
-        {% endif %}
-            
-        {% if listMode and editable %}
-            <a href="{{ path('app_myrecipes_form', {id: recipe.id })}}">
-                <button>Editer</button>
-            </a>
-            <form method="post" action="{{ path('app_myrecipes_delete', {id: recipe.id })}}">
-                <button type="submit" onclick="confirm('Etes-vous sûr de supprimer cette recette ?')">
-                    Supprimer
-                </button>
-            </form>
-        {% endif %}
+                {% if listMode %}
+                    <a href="{{ path('app_recipe', {id: recipe.id })}}">
+                        <button>Voir</button>
+                    </a>
+                {% endif %}
+                    
+                {% if (listMode and editable) or recipe.owner == app.user %}
+                    <a href="{{ path('app_myrecipes_form', {id: recipe.id })}}">
+                        <button>Editer</button>
+                    </a>
+                    <form method="post" action="{{ path('app_myrecipes_delete', {id: recipe.id })}}">
+                        <button type="submit" onclick="confirm('Etes-vous sûr de supprimer cette recette ?')">
+                            Supprimer
+                        </button>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
 
         {% if not listMode %}
             <div class="params">
