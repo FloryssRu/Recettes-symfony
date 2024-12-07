@@ -18,6 +18,8 @@ security:
                 check_path: /api/login_check
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
+                username_path: username
+                password_path: password
         api:
             pattern: ^/api
             stateless: true
@@ -54,7 +56,7 @@ security:
     access_control:
         # api :
         - { path: ^/api/login_check, roles: PUBLIC_ACCESS }
-        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api, roles: ROLE_API }
         # app :
         - { path: ^/deconnexion, roles: ROLE_USER }
         - { path: ^/liker, roles: ROLE_USER }

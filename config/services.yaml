@@ -6,6 +6,7 @@
 parameters:
     ITEM_BY_PAGE: 2
     DEV_MODE: '%env(APP_DEBUG)%'
+    PWD_API_USER: '%env(PWD_API_USER)%'
 
 services:
     # default configuration for services in *this* file
@@ -21,6 +22,10 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+    
+    App\Security\ApiAuthenticationSuccessListener:
+        tags:
+            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_authentication_success }
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
