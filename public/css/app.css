@@ -77,6 +77,18 @@ button:hover {
 a button {
     text-decoration: none;
 }
+p.param {
+    border-radius: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: none;
+    background-color: var(--grey-dark);
+    color: white;
+    display: inline;
+    margin-bottom: 10px;
+}
 /** endregion buttons **/
 
 /** region Forms **/
@@ -118,6 +130,9 @@ form.form-center button[type='submit'] {
     flex-direction: row;
     margin-bottom: 20px;
 }
+.flex-container.space-between {
+    justify-content: space-between;
+}
 .flex-container .item {
     width: 45%;
     background-color: white;
@@ -131,7 +146,7 @@ form.form-center button[type='submit'] {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
-.img-container img {
+.flex-container .item .img-container img {
     max-width : 100%;
     max-height: 100%;
     transform: translateY(-25%);
@@ -139,13 +154,13 @@ form.form-center button[type='submit'] {
 .flex-container .item-container {
     padding: 15px;
 }
-.flex-container .item-container .first-line {
+.item-container .first-line {
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
     justify-content: space-between;
 }
-.flex-container .item-container .first-line * {
+.item-container .first-line * {
     margin: 0;
 }
 .paginator {
@@ -153,6 +168,62 @@ form.form-center button[type='submit'] {
     margin-right: 15px;
 }
 /** endregion Containers and items **/
+
+/** region Recipe page **/
+.recipe-container .img-container {
+    width: auto;
+    height: 300px;
+    overflow: hidden;
+    border-radius: 10px;
+    margin: 15px;
+}
+.recipe-container .img-container img {
+    max-width : 100%;
+    transform: translateY(-25%);
+}
+.recipe-container .item-container {
+    margin: 15px;
+}
+.recipe-container .end-recipe {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.recipe-container section {
+    padding: 20px;
+    margin: 0;
+}
+.recipe-container section h3 {
+    margin: 0;
+}
+.recipe-container section.ingredients {
+    width: 30%;
+}
+.recipe-container section.ingredients ul {
+    padding: 0;
+    margin-bottom: 0;
+}
+.recipe-container section.ingredients li:last-of-type {
+    margin-bottom: 0;
+}
+.recipe-container section.preparation {
+    width : 58%;
+}
+.recipe-container section.preparation h3 {
+    margin-bottom: 20px;
+}
+.recipe-container section.preparation ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+.recipe-container section.preparation li {
+    margin-bottom: 40px;
+}
+.recipe-container section.preparation li:last-of-type {
+    margin-bottom: 0px;
+}
+/** endregion Recipe page **/
 
 /** region utils **/
 .inline {

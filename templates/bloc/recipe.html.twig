@@ -11,7 +11,7 @@
                 {% if iLikedThisRecipe %}
                     <p class="liked-users">
                         <a href="{{ path('app_like', {id: recipe.id, like: 0}) }}">
-                        {{ recipe.likedUsers|length }} ❤️
+                            {{ recipe.likedUsers|length }} ❤️
                         </a>
                     </p>
                 {% else %}
@@ -43,32 +43,46 @@
         {% endif %}
 
         {% if not listMode %}
-            <p>Types : {{ recipe.types|join(', ') }}</p>
-            <p>Temps de préparation : {{ recipe.preparationTime }} min</p>
+            {% for type in recipe.types %}
+                <p class="param">{{ type }}</p>
+            {% endfor %}
+            <p class="param">{{ recipe.preparationTime }} min</p>
             {% if recipe.isVegetarian %}
-                <p>Cette recette est végétarienne</p>
+                <p class="param">Végétarienne</p>
             {% endif %}
             {% if recipe.isVegan %}
-                <p>Cette recette est végan</p>
+                <p class="param">Végan</p>
             {% endif %}
-            {% if recipe.seasons|length > 0 %}
-                <p>Cette recette est à faire en {{ recipe.seasons|join(', ') }}</p>
-            {% endif %}
+            {% for season in recipe.seasons %}
+                <p class="param">{{ season }}</p>
+            {% endfor %}
 
-            <h3>Ingrédients</h3>
-            <ul>
-                {% for ingredient in recipe.ingredients %}
-                    <li>{{ ingredient.name }} : {{ ingredient.number }}{{ ingredient.measureUnit }}</li>
-                {% endfor %}
-            </ul>
+            <div class="end-recipe">
+                <section class="ingredients">
+                    <h3>Ingrédients</h3>
+                    <ul>
+                        {% for ingredient in recipe.ingredients %}
+                            <li class="flex-container space-between">
+                                <span>{{ ingredient.name }}</span>
+                                <span>{{ ingredient.number }} {{ ingredient.measureUnit }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </section>
 
-            <h3>Préparation</h3>
-            <ul>
-                {# order steps by step.number #}
-                {% for step in recipe.steps %}
-                    <li>{{ step.description }}</li>
-                {% endfor %}
-            </ul>
+                <section class="preparation">
+                    <h3>Préparation</h3>
+                    <ul>
+                        {# order steps by step.number #}
+                        {% for step in recipe.steps %}
+                            <li>
+                                <p class="param orange">{{ step.number }}</p>
+                                <span>{{ step.description }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </section>
+            </div>
         {% endif %}
     </div>
 </article>
