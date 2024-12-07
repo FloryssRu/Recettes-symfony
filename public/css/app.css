@@ -69,15 +69,44 @@ button {
     padding-right: 15px;
     border: none;
     background-color: var(--orange);
+    color: white;
 }
 button:hover {
     box-shadow: 3px 3px 6px var(--grey-dark);
 }
 a button {
-    color: white;
     text-decoration: none;
 }
-/** endregion buttons**/
+/** endregion buttons **/
+
+/** region Forms **/
+form {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+input, textarea {
+    width: 100%;
+    display: block;
+    margin-bottom: 15px;
+}
+input[type='checkbox'] {
+    display: inline;
+    width: auto;
+}
+
+form.form-center {
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+form.form-center button[type='submit'] {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    margin-top: 10px;
+}
+/** endregion Forms **/
 
 /** region utils **/
 .inline {
