@@ -89,6 +89,9 @@ p.param {
     display: inline;
     margin-bottom: 10px;
 }
+p.param.orange {
+    background-color: var(--orange);
+}
 /** endregion buttons **/
 
 /** region Forms **/
