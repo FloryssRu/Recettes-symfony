@@ -5,8 +5,8 @@
 {% block start_javascripts %}
     <script>
         const changePage = function(page) {
-            $('form').attr('action', '?page=' + page);
-            $('button[type=submit]').click();
+            $('form#search-form').attr('action', '?page=' + page);
+            $('form#search-form button[type=submit]').click();
         }
 
         const goToNextPage = function(actualPage) {
@@ -23,7 +23,7 @@
     <h1>Trouver des recettes</h1>
 
     <section>
-        {{ form_start(form) }}
+        {{ form_start(form, {'attr': {'id': 'search-form'}}) }}
             <div>
                 {{ form_errors(form.types) }}
                 {{ form_label(form.types) }}
@@ -63,13 +63,13 @@
         {% if recipes|length > 0 %}
             <div class="paginator">
                 {% if page > 0 %}
-                    <button onclick="goToPrevPage({{ page }})">
+                    <button type="button" onclick="goToPrevPage({{ page }})" class="mr-10">
                         < Résultats précédents
                     </button>
                 {% endif %}
                 <span>Page {{ page + 1 }} / {{ totalOfPages + 1 }}</span>
                 {% if page < totalOfPages %}
-                    <button onclick="goToNextPage({{ page }})">
+                    <button type="button" onclick="goToNextPage({{ page }})" class="ml-10">
                         Résultats suivants >
                     </button>
                 {% endif %}

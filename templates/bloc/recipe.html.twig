@@ -29,13 +29,13 @@
 
                 {% if listMode %}
                     <a href="{{ path('app_recipe', {id: recipe.id })}}">
-                        <button>Voir</button>
+                        <button type="button">Voir</button>
                     </a>
                 {% endif %}
                     
                 {% if (listMode and editable) or recipe.owner == app.user %}
                     <a href="{{ path('app_myrecipes_form', {id: recipe.id })}}">
-                        <button>Editer</button>
+                        <button type="button">Editer</button>
                     </a>
                     <form method="post" action="{{ path('app_myrecipes_delete', {id: recipe.id })}}">
                         <button type="submit" onclick="confirm('Etes-vous sûr de supprimer cette recette ?')">
