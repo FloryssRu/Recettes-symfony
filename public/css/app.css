@@ -14,16 +14,33 @@ body {
 }
 
 /** region Navigation **/
-header {
+header, footer {
     background-color: var(--blue);
+}
+
+header {
     height: 50px;
 }
 
-header nav {
+main {
+    min-height: calc(100vh - 200px);
+}
+main h1 {
+    margin-top: 0px;
+    padding-top: 20px;
+}
+
+footer {
+    height: 150px;
+}
+
+header nav,
+footer nav {
     height: 100%;
 }
 
-header ul {
+header ul,
+footer ul {
     height: 100%;
     margin-top: 0;
     margin-bottom: 0;
@@ -37,11 +54,13 @@ header ul {
     align-items: center;
 }
 
-header li {
+header li,
+footer li {
     display: inline;
 }
 
-header a {
+header a,
+footer a {
     color: var(--white);
     text-decoration: none;
 }
@@ -59,7 +78,7 @@ section {
     box-shadow: 2px 2px 6px var(--grey);
     padding: 10px;
 }
-/** endregion Navigation **/
+/** endregion Section **/
 
 /** region buttons **/
 button {
