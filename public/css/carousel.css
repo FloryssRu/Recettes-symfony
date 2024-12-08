@@ -1,38 +1,55 @@
-.owl-carousel a.owl-item {
+.owl-carousel a.carousel-item {
     color: white;
     text-decoration: none;
     width: 25%;
 }
 
-.owl-carousel .owl-item .item {
-    height: 200px;
-    background-image:
-      linear-gradient(
-        rgba(0, 0, 0, 0.5),
-        rgba(0, 0, 0, 0.5)
-      ),
-      url("/img/cake.jpg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    padding: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
-    border: 2px solid grey;
-}
-
 @media screen and (max-width: 600px) {
-    .owl-carousel .owl-item {
+    .owl-carousel .carousel-item {
         width: 100%;
     }
 }
 @media screen and (max-width: 900px) {
-    .owl-carousel .owl-item {
+    .owl-carousel .carousel-item {
         width: 50%;
     }
 }
 @media screen and (max-width: 1200px) {
-    .owl-carousel .owl-item {
+    .owl-carousel .carousel-item {
         width: 33%;
     }
+}
+
+.owl-carousel .item {
+    margin: 4px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 2px 2px 6px var(--grey);
+}
+.owl-carousel .item .img-container {
+    max-width: 100%;
+    max-height: 200px;
+    overflow: hidden;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.owl-carousel .item .img-container img {
+    max-width: 100%;
+    max-height: 100%;
+    transform: translateY(-25%);
+}
+.owl-carousel .item-container {
+    padding: 15px;
+}
+.item-container .first-line {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+}
+.item-container .first-line * {
+    margin: 0;
+}
+.item-container .first-line button {
+    margin-left: 10px;
 }

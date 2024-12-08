@@ -2,6 +2,23 @@
 
 {% block title %}Recherche de recettes{% endblock %}
 
+{% block start_javascripts %}
+    <script>
+        const changePage = function(page) {
+            $('form').attr('action', '?page=' + page);
+            $('button[type=submit]').click();
+        }
+
+        const goToNextPage = function(actualPage) {
+            changePage(actualPage + 1);
+        }
+
+        const goToPrevPage = function(actualPage) {
+            changePage(actualPage - 1);
+        }
+    </script>
+{% endblock %}
+
 {% block body %}
     <h1>Trouver des recettes</h1>
 
@@ -60,21 +77,4 @@
          {% endif %}
         {# End of Pagination buttons #}
     {% endif %}
-{% endblock %}
-
-{% block javascripts %}
-    <script>
-        const changePage = function(page) {
-            $('form').attr('action', '?page=' + page);
-            $('button[type=submit]').click();
-        }
-
-        const goToNextPage = function(actualPage) {
-            changePage(actualPage + 1);
-        }
-
-        const goToPrevPage = function(actualPage) {
-            changePage(actualPage - 1);
-        }
-    </script>
 {% endblock %}

@@ -3,9 +3,14 @@
 {% block title %}Accueil{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="owlcarousel/owl.carousel.min.css">
-    <link rel="stylesheet" href="owlcarousel/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/owlcarousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="/owlcarousel/owl.theme.default.min.css">
     <link rel="stylesheet" href="/css/carousel.css">
+{% endblock %}
+
+{% block start_javascripts %}
+    {# carousel owl #}
+    <script src="owlcarousel/owl.carousel.min.js"></script>
 {% endblock %}
 
 {% block body %}
@@ -21,11 +26,7 @@
         {% if recipes|length > 0%}
             <div class="owl-carousel owl-theme">
                 {% for recipe in recipes %}
-                    <a class="owl-item" href="{{ path("app_recipe", {'id': recipe.id }) }}">
-                        <div class="item">
-                            <p class="card-text text-center">{{ recipe.name }}</p>
-                        </div>
-                    </a>
+                    {% include "/bloc/recipe.html.twig" with {'recipe': recipe, 'listMode': true, 'editable': false} %}
                 {% endfor %}
             </div>
         {% else %}
@@ -60,17 +61,10 @@
 
 {% block end_javascripts %}
     {# carousel owl #}
-    <script src="owlcarousel/owl.carousel.min.js"></script>
     <script>
         $(document).ready(function(){
             $(".owl-carousel").owlCarousel({
                 items:3,
-                loop:true,
-                margin:5,
-                nav:true,
-                autoplay:true,
-                autoplayTimeout:2500,
-                autoplayHoverPause:true,
                 responsive:{
                     0:{items:1},
                     600:{items:2},
