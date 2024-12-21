@@ -5,18 +5,20 @@
 {% block body %}
     <h1>Inscription</h1>
 
-    {{ form_errors(registrationForm) }}
+    <section>
+        {{ form_errors(registrationForm) }}
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.pseudo) }}
-        {{ form_row(registrationForm.plainPassword) }}
-        
-        <div>
-            {{ form_widget(registrationForm.agreeTerms) }}
-            {{ form_label(registrationForm.agreeTerms) }}
-            {{ form_help(registrationForm.agreeTerms) }}
-        </div>
+        {{ form_start(registrationForm, { 'attr' : { 'class': 'form-center' } }) }}
+            {{ form_row(registrationForm.pseudo) }}
+            {{ form_row(registrationForm.plainPassword) }}
+            
+            <div>
+                {{ form_widget(registrationForm.agreeTerms) }}
+                {{ form_label(registrationForm.agreeTerms) }}
+                {{ form_help(registrationForm.agreeTerms) }}
+            </div>
 
-        <button type="submit" class="btn">Valider</button>
-    {{ form_end(registrationForm) }}
+            <button type="submit" class="btn">Valider</button>
+        {{ form_end(registrationForm) }}
+    </section>
 {% endblock %}

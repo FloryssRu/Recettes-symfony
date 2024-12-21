@@ -3,9 +3,14 @@
 {% block title %}Accueil{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="owlcarousel/owl.carousel.min.css">
-    <link rel="stylesheet" href="owlcarousel/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/owlcarousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="/owlcarousel/owl.theme.default.min.css">
     <link rel="stylesheet" href="/css/carousel.css">
+{% endblock %}
+
+{% block start_javascripts %}
+    {# carousel owl #}
+    <script src="owlcarousel/owl.carousel.min.js"></script>
 {% endblock %}
 
 {% block body %}
@@ -13,7 +18,7 @@
 
     <section>
         <p>Je cherche une recette</p>
-        <button><a href="{{ path('app_search') }}">Par ici !</a></button>
+        <a href="{{ path('app_search') }}"><button type="button">Par ici !</button></a>
     </section>
 
     {# Carrousel #}
@@ -21,11 +26,7 @@
         {% if recipes|length > 0%}
             <div class="owl-carousel owl-theme">
                 {% for recipe in recipes %}
-                    <a class="owl-item" href="{{ path("app_recipe", {'id': recipe.id }) }}">
-                        <div class="item">
-                            <p class="card-text text-center">{{ recipe.name }}</p>
-                        </div>
-                    </a>
+                    {% include "/bloc/recipe.html.twig" with {'recipe': recipe, 'listMode': true, 'editable': false} %}
                 {% endfor %}
             </div>
         {% else %}
@@ -37,40 +38,33 @@
 
     <section>
         <p>Crée tes recettes !</p>
-        <button><a href="{{ path('app_myrecipes') }}">C'est parti !</a></button>
+        <a href="{{ path('app_myrecipes') }}"><button type="button">C'est parti !</button></a>
     </section>
 
     <section>
         <p>Qu'est-ce qu'on mange ?</p>
-        <button><a href="{{ path('app_random') }}">J'ai faim !</a></button>
+        <a href="{{ path('app_random') }}"><button type="button">J'ai faim !</button></a>
     </section>
 
     {# > planificateur (to do) #}
     <section>
         <p>J'ai besoin de planifier</p>
-        <button><a href="#">Mon calendrier</a></button>
+        <a href="#"><button type="button">Mon calendrier</button></a>
     </section>
 
     {# > recap courses (to do) #}
     <section>
         <p>Qu'est ce que je dois acheter ?</p>
-        <button><a href="#">Ma liste de courses</a></button>
+        <a href="#"><button type="button">Ma liste de courses</button></a>
     </section>
 {% endblock %}
 
 {% block end_javascripts %}
     {# carousel owl #}
-    <script src="owlcarousel/owl.carousel.min.js"></script>
     <script>
         $(document).ready(function(){
             $(".owl-carousel").owlCarousel({
                 items:3,
-                loop:true,
-                margin:5,
-                nav:true,
-                autoplay:true,
-                autoplayTimeout:2500,
-                autoplayHoverPause:true,
                 responsive:{
                     0:{items:1},
                     600:{items:2},

@@ -3,15 +3,21 @@
 {% block title %}Mes recettes{% endblock %}
 
 {% block body %}
-    <section>
-        <h1>Mes recettes</h1>
+    <h1>Mes recettes</h1>
 
-        <a href="{{ path('app_myrecipes_form', {id: 0}) }}"><button>Nouvelle recette</button></a>
+    <div class="center">
+        <a href="{{ path('app_myrecipes_form', {id: 0}) }}">
+            <button type="button">
+                Nouvelle recette
+            </button>
+        </a>
+    </div>
 
+    <div class="flex-container mt-10">
         {% for recipe in recipes %}
             {% include "/bloc/recipe.html.twig" with {'recipe': recipe, 'listMode': true, 'editable': true} %}
         {% else %}
             <p>Vous n'avez encore enregistré aucune recette.</p>
         {% endfor %}
-    </section>
+    </div>
 {% endblock %}

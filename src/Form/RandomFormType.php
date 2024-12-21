@@ -20,25 +20,25 @@ class RandomFormType extends AbstractType
         if ($options['randomSearch']) {
             $builder->add('allOfThisTypes', CheckboxType::class, [
                 'mapped' => false,
-                'label' => 'Une recette de chaque type.',
+                'label' => 'Une recette de chaque type',
                 'required' => false,
             ]);
         }
 
         $builder
             ->add('types', EntityType::class, [
-                'label' => 'Les types de recettes.',
+                'label' => 'Les types de recettes',
                 'class' => RecipeType::class,
                 'choice_label' => 'name',
                 'expanded' => true,
                 'multiple' => true
             ])
             ->add('isVegetarian', CheckboxType::class, [
-                'label' => 'Les recettes doivent être végétariennes.',
+                'label' => 'Les recettes doivent être végétariennes',
                 'required' => false,
             ])
             ->add('isVegan', CheckboxType::class, [
-                'label' => 'Les recettes doivent être végan.',
+                'label' => 'Les recettes doivent être végans',
                 'required' => false,
             ])
             // TODO ideas for other filters

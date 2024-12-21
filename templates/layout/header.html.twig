@@ -1,0 +1,16 @@
+<header>
+    <nav>
+        <ul>
+            <li><a href="{{ path('app_home') }}">Accueil</a></li>
+            <li><a href="{{ path('app_search') }}">Recherche</a></li>
+            <li><a href="{{ path('app_random') }}">Aléatoire</a></li>
+            {% if app.user %}
+                <li><a href="{{ path('app_myrecipes') }}">Mes recettes</a></li>
+                <li><a href="{{ path('app_logout') }}">Déconnexion</a></li>
+            {% else %}
+                <li><a href="{{ path('app_login') }}">Connexion</a></li>
+                <li><a href="{{ path('app_register') }}">Inscription</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</header>

@@ -1,0 +1,392 @@
+:root {
+    --white: #F3F5F3;
+    --grey: #C8CBC8;
+    --grey-dark: #858785;
+    --blue: #4B6289;
+    --orange: #FFAC00;
+    --brown: #986358;
+}
+
+body {
+    background-color: var(--white);
+    font-family: 'Roboto', 'Open Sans', 'Arial';
+    color: black;
+}
+
+/** region Navigation **/
+header, footer {
+    background-color: var(--blue);
+}
+
+header {
+    height: 50px;
+}
+
+main {
+    min-height: calc(100vh - 200px);
+}
+main h1 {
+    margin-top: 0px;
+    padding-top: 20px;
+}
+
+footer {
+    height: 150px;
+}
+
+header nav,
+footer nav {
+    height: 100%;
+}
+
+header ul,
+footer ul {
+    height: 100%;
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style-type: none;
+    padding-left: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+header li,
+footer li {
+    display: inline;
+}
+
+header a,
+footer a {
+    color: var(--white);
+    text-decoration: none;
+}
+/** endregion Navigation **/
+
+
+/** region Section **/
+h1 {
+    text-align: center;
+}
+section {
+    margin: 15px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 2px 2px 6px var(--grey);
+    padding: 10px;
+}
+/** endregion Section **/
+
+/** region buttons **/
+button {
+    cursor: pointer;
+    border-radius: 20px;
+    height: 40px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border: none;
+    background-color: var(--orange);
+    color: white;
+}
+button:hover {
+    box-shadow: 3px 3px 6px var(--grey);
+}
+a button {
+    text-decoration: none;
+}
+button.btn-new {
+    background-color: var(--blue);
+} 
+div.params {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+p.param {
+    margin: 0;
+    border-radius: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: none;
+    background-color: var(--grey-dark);
+    color: white;
+    display: inline;
+}
+p.param.orange {
+    background-color: var(--orange);
+}
+/** endregion buttons **/
+
+/** region Forms **/
+form {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+input, textarea {
+    width: 100%;
+    display: block;
+    margin-bottom: 15px;
+}
+input[type='checkbox'] {
+    display: inline;
+    width: auto;
+}
+
+form.form-center {
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+form.form-center button[type='submit'] {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    margin-top: 10px;
+}
+/** endregion Forms **/
+
+/** region Containers and items **/
+.flex-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    flex-direction: row;
+    margin-bottom: 20px;
+}
+.flex-container.space-between {
+    justify-content: space-between;
+}
+.flex-container .item {
+    width: 45%;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 2px 2px 6px var(--grey);
+}
+.flex-container .item .img-container {
+    max-width: 100%;
+    max-height: 200px;
+    overflow: hidden;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.flex-container .item .img-container img {
+    max-width: 100%;
+    max-height: 100%;
+    transform: translateY(-25%);
+}
+.flex-container .item-container {
+    padding: 15px;
+}
+.item-container .first-line {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+}
+.item-container .first-line * {
+    margin: 0;
+}
+.item-container .first-line button {
+    margin-left: 10px;
+}
+.paginator {
+    text-align: right;
+    margin-right: 15px;
+}
+
+@media screen and (max-width: 1200px) {}
+@media screen and (max-width: 900px) {
+    .flex-container .item {
+        width: 95%;
+    }
+}
+@media screen and (max-width: 600px) {
+    .flex-container .item {
+        width: 95%;
+    }
+    .flex-container .item .img-container {
+        max-height: 150px;
+    }
+}
+/** endregion Containers and items **/
+
+/** region Recipe page **/
+.recipe-container {
+    width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.recipe-container .img-container {
+    width: auto;
+    height: 300px;
+    overflow: hidden;
+    border-radius: 10px;
+    margin: 15px;
+}
+.recipe-container .img-container img {
+    width: 100%;
+    transform: translateY(-25%);
+}
+.recipe-container .item-container {
+    margin: 15px;
+}
+.recipe-container .end-recipe {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.recipe-container section {
+    padding: 20px;
+    margin: 0;
+}
+.recipe-container section h3 {
+    margin: 0;
+}
+.recipe-container section.ingredients {
+    width: 30%;
+}
+.recipe-container section.ingredients ul {
+    padding: 0;
+    margin-bottom: 0;
+}
+.recipe-container section.ingredients li:last-of-type {
+    margin-bottom: 0;
+}
+.recipe-container section.preparation {
+    width: 60%;
+}
+.recipe-container section.preparation h3 {
+    margin-bottom: 20px;
+}
+.recipe-container section.preparation ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+.recipe-container section.preparation li {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+.recipe-container section.preparation li p.param {
+    margin-right: 15px;
+}
+.recipe-container section.preparation li:last-of-type {
+    margin-bottom: 0px;
+}
+
+@media screen and (max-width: 1200px) {
+    .recipe-container {
+        width: 850px;
+    }
+    .recipe-container section.ingredients {
+        width: 28%;
+    }
+    .recipe-container section.preparation {
+        width: 58%;
+    }
+}
+@media screen and (max-width: 900px) {
+    .recipe-container {
+        width: 530px;
+    }
+    .recipe-container .img-container {
+        height: 200px;
+    }
+    .recipe-container .end-recipe {
+        flex-direction: column;
+    }
+    .recipe-container section.ingredients {
+        width: 100%;
+        margin-bottom: 15px;
+        padding: 0;
+    }
+    .recipe-container section.ingredients .end-recipe-bloc {
+        margin: 15px;
+    }
+    .recipe-container section.preparation {
+        width: 100%;
+        padding: 0;
+    }
+    .recipe-container section.preparation .end-recipe-bloc {
+        margin: 15px;
+    }
+}
+@media screen and (max-width: 600px) {
+    .recipe-container {
+        width: 400px;
+    }
+    .recipe-container .img-container {
+        height: 150px;
+    }
+    .recipe-container .end-recipe {
+        flex-direction: column;
+    }
+    .recipe-container section.ingredients {
+        width: 100%;
+        margin-bottom: 15px;
+        padding: 0;
+    }
+    .recipe-container section.ingredients .end-recipe-bloc {
+        margin: 15px;
+    }
+    .recipe-container section.preparation {
+        width: 100%;
+        padding: 0;
+    }
+    .recipe-container section.preparation .end-recipe-bloc {
+        margin: 15px;
+    }
+}
+/** endregion Recipe page **/
+
+/** region utils **/
+.inline {
+    display: inline;
+}
+.center {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.m-10 {
+    margin: 10px;
+}
+.mt-10 {
+    margin-top: 10px;
+}
+.mr-10 {
+    margin-right: 10px;
+}
+.ml-10 {
+    margin-left: 10px;
+}
+.mb-10 {
+    margin-bottom: 10px;
+}
+
+.p-10 {
+    padding: 10px;
+}
+.pt-10 {
+    padding-top: 10px;
+}
+.pr-10 {
+    padding-right: 10px;
+}
+.pl-10 {
+    padding-left: 10px;
+}
+.pb-10 {
+    padding-bottom: 10px;
+}
+/** endregion utils **/
